@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TextField">
+        <attr name="placeholder" format="string"/>
+        <attr name="inputType" format="flags">
+            <flag name="text" value="0" />
+            <flag name="email" value="1" />
+            <flag name="password" value="2" />
+            <flag name="textWithoutSuggestions" value="3" />
+            <flag name="none" value="4" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="AppTheme">
+        <attr name="colorButtonStyle" format="reference"/>
+    </declare-styleable>
+
+</resources>

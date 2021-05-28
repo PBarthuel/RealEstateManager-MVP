@@ -7,13 +7,14 @@
     <application
         android:name=".app.modules.main.RealEstateManagerApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:fullBackupContent="true"
+        android:icon="@drawable/ic_search"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_pin"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.openclassrooms.realestatemanager.app.modules.main.MainActivity"
+            android:name=".app.modules.main.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -24,6 +25,11 @@
         </activity>
         <activity
             android:name=".app.modules.realEstateCreate.RealEstateCreateActivity"/>
-    </application>
 
+        <!-- UCrop -->
+        <activity
+            android:name="com.yalantis.ucrop.UCropActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    </application>
 </manifest>

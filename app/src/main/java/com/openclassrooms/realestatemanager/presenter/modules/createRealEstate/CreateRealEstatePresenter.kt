@@ -11,10 +11,12 @@ import javax.inject.Inject
 
 interface CreateRealEstateView {
     fun onDismissView()
+    fun onUpdateList(list: List<UIPhotoItem>)
 }
 
 interface CreateRealEstatePresenter: DisposablePresenter<CreateRealEstateView> {
     fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, interestPoint: String, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String, address: UIAddressItem)
+    fun didAddPhoto(photoName: String, base64ImageData: String)
 }
 
 class CreateRealEstatePresenterImpl @Inject constructor(
@@ -24,7 +26,7 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     
     override var view: CreateRealEstateView? = null
     
-    var photos: List<UIPhotoItem> = listOf()
+    var photos: MutableList<UIPhotoItem> = mutableListOf()
     
     override fun attach(view: CreateRealEstateView) {
         this.view = view
@@ -70,4 +72,8 @@ class CreateRealEstatePresenterImpl @Inject constructor(
             })
     }
     
+    override fun didAddPhoto(photoName: String, base64ImageData: String) {
+        photos.add(UIPhotoItem(base64ImageData, photoName))
+        view?.onUpdateList(photos)
+    }
 }
