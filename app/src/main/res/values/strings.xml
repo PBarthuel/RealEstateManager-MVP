@@ -2,6 +2,7 @@
     <string name="app_name">Real Estate Manager</string>
     <string name="common_ok">OK</string>
     <string name="common_cancel">Cancel</string>
+    <string name="common_sold">Sold</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -25,4 +26,27 @@
     <string name="master_detail_room_number">Number of rooms</string>
     <string name="master_detail_bathroom_number">Number of bathrooms</string>
     <string name="master_detail_bedroom_number">Number of bedrooms</string>
+
+    <string name="real_estate_type">type</string>
+    <string name="real_estate_price">Price</string>
+    <string name="real_estate_surface">Surface</string>
+    <string name="real_estate_description">Description</string>
+    <string name="real_estate_interest_point">Interest Point</string>
+    <string name="real_estate_entry_date">Entry date</string>
+    <string name="real_estate_exit_date">Exit date</string>
+    <string name="real_estate_agent">Agent</string>
+    <string name="real_estate_country">Country</string>
+    <string name="real_estate_road">Road</string>
+    <string name="real_estate_house_number">House number</string>
+    <string name="real_estate_city">City</string>
+    <string name="real_estate_postal_code">Postal code</string>
+    <string name="real_estate_total_room_number">Total room</string>
+    <string name="real_estate_bedroom_number">Bedroom</string>
+    <string name="real_estate_bathroom_number">Bathroom</string>
+    <string name="submit_btn">Submit</string>
+    <string name="real_estate_photo">Photo</string>
+    <string name="real_estate_photo_name">Photo name</string>
+    <string name="photo_btn">Photo</string>
+    <string name="error_photo_format">The image sent is not in the correct format, please try again</string>
+    <string name="error_incorrect_price">Price is incorrect</string>
 </resources>
