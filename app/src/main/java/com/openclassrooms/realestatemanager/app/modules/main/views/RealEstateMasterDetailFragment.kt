@@ -13,7 +13,9 @@ import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.realEstateCreate.RealEstateCreateActivity
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RealEstateMasterDetailFragment : Fragment() {
     
     private var _binding: FragmentRealEstateMasterDetailBinding? = null
