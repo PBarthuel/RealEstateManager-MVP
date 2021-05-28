@@ -3,4 +3,16 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="grayscale_200">#E6E7E8</color>
+    <color name="grayscale_300">#CBCDCF</color>
+    <color name="grayscale_500">#53565A</color>
+    <color name="grayscale_600">#2A2B2D</color>
+    <color name="secondary_main">#0047BB</color>
+    <color name="secondary_100">#C7D4EB</color>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="pink">#F004B5</color>
+    <color name="error_main">#E13151</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>
