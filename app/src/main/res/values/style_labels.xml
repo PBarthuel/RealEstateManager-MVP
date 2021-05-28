@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="BodyBoldMedium">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="BodyMedium">
+        <item name="fontFamily">@font/nunito_sans_regular</item>
+        <item name="android:textColor">@color/grayscale_500</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Heading300">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="android:textColor">@color/grayscale_600</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="Heading400" parent="TextAppearance.Design.Hint">
+        <item name="android:fontFamily">@font/nunito_sans_bold</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="BodyMediumPrice">
+        <item name="fontFamily">@font/nunito_sans_regular</item>
+        <item name="android:textColor">@color/pink</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+</resources>

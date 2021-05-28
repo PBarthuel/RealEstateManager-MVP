@@ -17,4 +17,12 @@
     <string name="toolbar_search">Search</string>
     <string name="toolbar_modification">Modification</string>
     <string name="toolbar_creation">Creation</string>
+
+    <string name="master_detail_description">Description</string>
+    <string name="master_detail_media">Media</string>
+    <string name="master_detail_surface">Surface</string>
+    <string name="master_detail_location">Location</string>
+    <string name="master_detail_room_number">Number of rooms</string>
+    <string name="master_detail_bathroom_number">Number of bathrooms</string>
+    <string name="master_detail_bedroom_number">Number of bedrooms</string>
 </resources>
