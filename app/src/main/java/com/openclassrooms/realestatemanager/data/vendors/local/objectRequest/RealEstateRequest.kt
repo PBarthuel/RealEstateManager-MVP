@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.data.vendors.local.objectRequest
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
 import kotlinx.serialization.Serializable
 
 @Entity
