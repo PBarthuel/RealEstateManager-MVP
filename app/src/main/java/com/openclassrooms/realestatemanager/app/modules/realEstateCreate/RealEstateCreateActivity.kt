@@ -4,7 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.databinding.ActivityRealEstateCreateBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class RealEstateCreateActivity: AppCompatActivity() {
     
     private val binding by activityViewBinding(ActivityRealEstateCreateBinding::inflate)
