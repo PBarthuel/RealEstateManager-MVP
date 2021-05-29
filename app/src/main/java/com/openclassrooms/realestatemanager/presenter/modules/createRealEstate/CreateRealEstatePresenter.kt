@@ -17,6 +17,7 @@ interface CreateRealEstateView {
 interface CreateRealEstatePresenter: DisposablePresenter<CreateRealEstateView> {
     fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, interestPoint: String, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String, address: UIAddressItem)
     fun didAddPhoto(photoName: String, base64ImageData: String)
+    fun didDeletePhoto(photo: UIPhotoItem)
 }
 
 class CreateRealEstatePresenterImpl @Inject constructor(
@@ -26,7 +27,7 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     
     override var view: CreateRealEstateView? = null
     
-    var photos: MutableList<UIPhotoItem> = mutableListOf()
+    var photos: ArrayList<UIPhotoItem> = arrayListOf()
     
     override fun attach(view: CreateRealEstateView) {
         this.view = view
@@ -45,23 +46,23 @@ class CreateRealEstatePresenterImpl @Inject constructor(
         address: UIAddressItem,
     ) {
         val item = UIRealEstateMasterDetailItem(
-                id = 0,
-                type = type,
-                price = price,
-                surface = surface,
-                description = description,
-                interestPoint = interestPoint,
-                agent = agent,
-                isSold = false,
-                entryDate = Utils.todayDate,
-                exitDate = "05/05/2085",
-                totalRoomNumber = totalRoomNumber,
-                bedroomNumber = bedroomNumber,
-                bathroomNumber = bathroomNumber,
-                address = address,
-                photos = photos
+            id = 0,
+            type = type,
+            price = price,
+            surface = surface,
+            description = description,
+            interestPoint = interestPoint,
+            agent = agent,
+            isSold = false,
+            entryDate = Utils.todayDate,
+            exitDate = "05/05/2085",
+            totalRoomNumber = totalRoomNumber,
+            bedroomNumber = bedroomNumber,
+            bathroomNumber = bathroomNumber,
+            address = address,
+            photos = photos
         )
-        
+
         createRealEstate.invoke(item)
             .subscribeOn(networkSchedulers.io)
             .observeOn(networkSchedulers.main)
@@ -74,6 +75,11 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     
     override fun didAddPhoto(photoName: String, base64ImageData: String) {
         photos.add(UIPhotoItem(base64ImageData, photoName))
+        view?.onUpdateList(photos)
+    }
+
+    override fun didDeletePhoto(photo: UIPhotoItem) {
+        photos.remove(photo)
         view?.onUpdateList(photos)
     }
 }

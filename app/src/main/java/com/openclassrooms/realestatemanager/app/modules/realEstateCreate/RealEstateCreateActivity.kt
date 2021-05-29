@@ -8,6 +8,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.OnPhotoClickListener
+import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.app.ui.popups.AddingPhotoPopUpDialogFragment
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.app.utils.viewExtension.setClickWithDelay
@@ -25,7 +27,10 @@ import pl.aprilapps.easyphotopicker.MediaSource
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView {
+class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPhotoClickListener {
+
+    @Inject
+    lateinit var adapter: PhotoListAdapter
     
     @Inject
     lateinit var presenter: CreateRealEstatePresenter
@@ -36,7 +41,10 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView {
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
+        presenter.attach(this)
+
+        setupAdapter()
         setupUI()
     }
     
@@ -82,9 +90,9 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView {
         photoImagePicker.handleActivityResult(requestCode, resultCode, resultIntent, this, object : EasyImage.Callbacks {
             override fun onMediaFilesPicked(imageFiles: Array<MediaFile>, source: MediaSource) {
                 UCrop.of(Uri.fromFile(imageFiles[0].file), Uri.fromFile(imageFiles[0].file))
-                        .withAspectRatio(1.0f, 1.0f)
-                        .withMaxResultSize(IMAGE_MAX_SIZE, IMAGE_MAX_SIZE)
-                        .start(this@RealEstateCreateActivity)
+                    .withAspectRatio(1.0f, 1.0f)
+                    .withMaxResultSize(IMAGE_MAX_SIZE, IMAGE_MAX_SIZE)
+                    .start(this@RealEstateCreateActivity)
             }
             
             override fun onImagePickerError(error: Throwable, source: MediaSource) {
@@ -107,12 +115,26 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView {
             }
         }
     }
+
+    private fun setupAdapter() {
+        binding.recyclerView.adapter = adapter
+        adapter.onPhotoClickListener = this
+    }
     
     //region CreateRealEstateView callbacks
     override fun onDismissView() { finish() }
-    override fun onUpdateList(list: List<UIPhotoItem>) { }
+    override fun onUpdateList(list: List<UIPhotoItem>) {
+        adapter.notifyDataSetChanged()
+        adapter.submitList(list)
+    }
     //endregion
-    
+
+    //region OnPhotoClickListener callback
+    override fun onRealEstatePhotoClicked(item: UIPhotoItem) {
+        presenter.didDeletePhoto(item)
+    }
+    //endregion
+
     companion object {
         const val IMAGE_MAX_SIZE = 512
     }
