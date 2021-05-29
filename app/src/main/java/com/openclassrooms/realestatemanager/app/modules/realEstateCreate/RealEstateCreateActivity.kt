@@ -127,6 +127,59 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
         adapter.notifyDataSetChanged()
         adapter.submitList(list)
     }
+
+    override fun onReceiveWrongTypeFormatError() {
+        binding.typeTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.typeTextInputLayout.error = "wrong type format"
+    }
+    override fun onReceiveWrongPriceFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong price format"
+    }
+    override fun onReceiveWrongSurfaceFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong surface format"
+    }
+    override fun onReceiveWrongDescriptionFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong description format"
+    }
+    override fun onReceiveWrongAgentFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong agent format"
+    }
+    override fun onReceiveWrongTotalRoomNumberFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong total room number format"
+    }
+    override fun onReceiveWrongBedroomNumberFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong bedroom number format"
+    }
+    override fun onReceiveWrongBathroomNumberFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong bathroom number format"
+    }
+    override fun onReceiveWrongCountryFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong country format"
+    }
+    override fun onReceiveWrongRoadFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong road format"
+    }
+    override fun onReceiveWrongHouseNumberFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong house number format"
+    }
+    override fun onReceiveWrongCityFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong city format"
+    }
+    override fun onReceiveWrongPostalCodeFormatError() {
+        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
+        binding.priceTextInputLayout.error = "wrong postal code format"
+    }
     //endregion
 
     //region OnPhotoClickListener callback

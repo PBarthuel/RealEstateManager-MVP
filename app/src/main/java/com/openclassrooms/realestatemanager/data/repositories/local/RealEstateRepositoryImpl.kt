@@ -6,54 +6,63 @@ import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.Pho
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.RealEstateRequest
 import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
 import com.openclassrooms.realestatemanager.domain.repositories.local.RealEstateRepository
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.core.SingleOnSubscribe
+import java.lang.Exception
 import javax.inject.Inject
 
 class RealEstateRepositoryImpl @Inject constructor(
     private val realEstateDao: RealEstateDao
 ) : RealEstateRepository {
-    
-    override fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail) {
-        with(domainRealEstateMasterDetail) {
-            val id = realEstateDao.createRealEstate(
-                RealEstateRequest(
-                    realEstateId = id,
-                    type = type,
-                    price = price,
-                    surface = surface,
-                    description = description,
-                    interestPoint = interestPoint,
-                    isSold = isSold,
-                    entryDate = entryDate,
-                    exitDate = exitDate,
-                    agent = agent,
-                    totalRoomNumber = totalRoomNumber,
-                    bedroomNumber = bedroomNumber,
-                    bathroomNumber = bathroomNumber
-                )
-            )
-            with(address) {
-                realEstateDao.createAddress(
-                    AddressRequest(
-                        addressId = 0,
-                        realEstateOwnerId = id,
-                        country = country,
-                        city = city,
-                        houseNumber = houseNumber,
-                        road = road,
-                        postalCode = postalCode
+
+    override fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail): Single<Unit> =
+        Single.create { single ->
+            with(domainRealEstateMasterDetail) {
+                try {
+                    val id = realEstateDao.createRealEstate(
+                        RealEstateRequest(
+                            realEstateId = id,
+                            type = type,
+                            price = price,
+                            surface = surface,
+                            description = description,
+                            interestPoint = interestPoint,
+                            isSold = isSold,
+                            entryDate = entryDate,
+                            exitDate = exitDate,
+                            agent = agent,
+                            totalRoomNumber = totalRoomNumber,
+                            bedroomNumber = bedroomNumber,
+                            bathroomNumber = bathroomNumber
+                        )
                     )
-                )
+                    with(address) {
+                        realEstateDao.createAddress(
+                            AddressRequest(
+                                addressId = 0,
+                                realEstateOwnerId = id,
+                                country = country,
+                                city = city,
+                                houseNumber = houseNumber,
+                                road = road,
+                                postalCode = postalCode
+                            )
+                        )
+                    }
+                    realEstateDao.createPhoto(
+                        photos.map { photo ->
+                            PhotoRequest(
+                                photoId = 0,
+                                realEstateOwnerId = id,
+                                photoReference = photo.photoReference,
+                                roomType = photo.roomType
+                            )
+                        }
+                    )
+                    single.onSuccess(Unit)
+                } catch (e: Exception) {
+                    single.onError(e)
+                }
             }
-            realEstateDao.createPhoto(
-                 photos.map { photo ->
-                     PhotoRequest(
-                        photoId = 0,
-                        realEstateOwnerId = id,
-                        photoReference = photo.photoReference,
-                        roomType = photo.roomType
-                     )
-                 }
-            )
         }
-    }
 }

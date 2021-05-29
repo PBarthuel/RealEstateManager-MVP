@@ -6,10 +6,12 @@ import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAdd
 import com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem.UIPhotoItem
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
 import com.openclassrooms.realestatemanager.presenter.protocols.DisposablePresenter
+import com.openclassrooms.realestatemanager.presenter.protocols.errorProtocol.FormErrorProtocol
+import com.openclassrooms.realestatemanager.presenter.protocols.plusAssign
 import com.openclassrooms.realestatemanager.presenter.protocols.utils.NetworkSchedulers
 import javax.inject.Inject
 
-interface CreateRealEstateView {
+interface CreateRealEstateView : FormErrorProtocol {
     fun onDismissView()
     fun onUpdateList(list: List<UIPhotoItem>)
 }
@@ -63,13 +65,13 @@ class CreateRealEstatePresenterImpl @Inject constructor(
             photos = photos
         )
 
-        createRealEstate.invoke(item)
+        disposeBag += createRealEstate.invoke(item)
             .subscribeOn(networkSchedulers.io)
             .observeOn(networkSchedulers.main)
             .subscribe({
                 view?.onDismissView()
             }, {
-            // TODO here handle the error
+                view?.onReceiveError(it)
             })
     }
     

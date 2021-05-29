@@ -1,10 +1,14 @@
 package com.openclassrooms.realestatemanager.domain.useCases.createRealEstate
 
 import com.openclassrooms.realestatemanager.domain.models.DomainAddress
+import com.openclassrooms.realestatemanager.domain.models.DomainFormException
 import com.openclassrooms.realestatemanager.domain.models.DomainPhoto
 import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
 import com.openclassrooms.realestatemanager.domain.repositories.local.RealEstateRepository
+import com.openclassrooms.realestatemanager.domain.utils.isNameValid
+import com.openclassrooms.realestatemanager.domain.utils.isOnlyNumber
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
+import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleOnSubscribe
 import java.lang.Exception
@@ -14,10 +18,13 @@ class CreateRealEstateUseCase @Inject constructor(
     private val realEstateRepository: RealEstateRepository
 ) {
 
-    fun invoke(item: UIRealEstateMasterDetailItem): Single<Unit> =
-        Single.create(SingleOnSubscribe { single ->
-            with(item) {
-                try {
+    fun invoke(item: UIRealEstateMasterDetailItem): Single<Unit> {
+        with(item) {
+            return when {
+                !type.isNameValid() -> Single.error(DomainFormException.WrongTypeFormat("$type format is not valid"))
+                !price.isOnlyNumber() -> Single.error(DomainFormException.WrongPriceFormat("$price format is not valid"))
+                else -> {
+
                     realEstateRepository.createRealEstate(
                         DomainRealEstateMasterDetail(
                             id = id,
@@ -48,10 +55,8 @@ class CreateRealEstateUseCase @Inject constructor(
                             }
                         )
                     )
-                    single.onSuccess(Unit)
-                } catch (e: Exception) {
-                    single.onError(e)
                 }
             }
-        })
+        }
+    }
 }
