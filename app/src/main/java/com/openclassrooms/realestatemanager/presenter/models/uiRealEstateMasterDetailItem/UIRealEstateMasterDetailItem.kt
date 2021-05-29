@@ -1,6 +1,9 @@
-package com.openclassrooms.realestatemanager.domain.models
+package com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem
 
-data class DomainRealEstateMasterDetail(
+import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
+import com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem.UIPhotoItem
+
+data class UIRealEstateMasterDetailItem(
     val id: Long,
     val type: String,
     val price: String,
@@ -17,6 +20,6 @@ data class DomainRealEstateMasterDetail(
     val totalRoomNumber: String,
     val bedroomNumber: String,
     val bathroomNumber: String,
-    val address: DomainAddress,
-    val photos: List<DomainPhoto>
+    val address: UIAddressItem,
+    val photos: List<UIPhotoItem>
 )

@@ -82,21 +82,133 @@
                 android:hint="@string/real_estate_description" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/interestPointTextInputLayout"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/interestPointConstraintLayout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="12dp"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/descriptionTextInputLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/interestPointEditText"
-                android:layout_width="match_parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/schoolConstraintLayout"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/real_estate_interest_point" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintEnd_toStartOf="@id/commerceConstraintLayout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/schoolTextView"
+                    style="@style/Heading300"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_school"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/schoolSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/schoolTextView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:checked="true" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/commerceConstraintLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/schoolConstraintLayout"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/commerceTextView"
+                    style="@style/Heading300"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_commerce"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/commerceSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="24dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/commerceTextView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:checked="false" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/parcConstraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@id/schoolConstraintLayout"
+                app:layout_constraintStart_toStartOf="@id/schoolConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@id/schoolConstraintLayout">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/parcTextView"
+                    style="@style/Heading300"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_parc"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/parcSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:checked="false" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/trainStationConstraintLayout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="@id/commerceConstraintLayout"
+                app:layout_constraintStart_toStartOf="@id/commerceConstraintLayout"
+                app:layout_constraintTop_toBottomOf="@id/schoolConstraintLayout">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/trainStationTextView"
+                    style="@style/Heading300"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/real_estate_train_station"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/trainStationSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:checked="true" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/agentTextInputLayout"
@@ -105,7 +217,7 @@
             android:layout_margin="12dp"
             app:layout_constraintEnd_toEndOf="@id/searchGuideLineHalf"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/interestPointTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/interestPointConstraintLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/agentEditText"
@@ -121,7 +233,7 @@
             android:layout_margin="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/searchGuideLineHalf"
-            app:layout_constraintTop_toBottomOf="@id/interestPointTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/interestPointConstraintLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/countryEditText"
@@ -266,7 +378,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:visibility="gone"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/photoButton"
@@ -321,15 +432,16 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_marginBottom="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

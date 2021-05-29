@@ -11,6 +11,7 @@ import com.openclassrooms.realestatemanager.data.models.entities.RealEstateMaste
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.AddressRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.PhotoRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.RealEstateRequest
+import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface RealEstateDao {

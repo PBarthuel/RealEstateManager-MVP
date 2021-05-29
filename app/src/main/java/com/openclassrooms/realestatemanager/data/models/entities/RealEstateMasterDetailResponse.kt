@@ -26,21 +26,24 @@ data class RealEstateMasterDetailResponse (
     override fun toDomain(): DomainRealEstateMasterDetail =
         with(realEstate) {
             DomainRealEstateMasterDetail(
-                    realEstateId,
-                    type,
-                    price,
-                    surface,
-                    description,
-                    interestPoint,
-                    isSold,
-                    entryDate,
-                    exitDate,
-                    agent,
-                    totalRoomNumber,
-                    bedroomNumber,
-                    bathroomNumber,
-                    address.toDomain(),
-                    photo.map { it.toDomain() }
+                realEstateId,
+                type,
+                price,
+                surface,
+                description,
+                school,
+                commerce,
+                parc,
+                trainStation,
+                isSold,
+                entryDate,
+                exitDate,
+                agent,
+                totalRoomNumber,
+                bedroomNumber,
+                bathroomNumber,
+                address.toDomain(),
+                photo.map { it.toDomain() }
             )
         }
 }

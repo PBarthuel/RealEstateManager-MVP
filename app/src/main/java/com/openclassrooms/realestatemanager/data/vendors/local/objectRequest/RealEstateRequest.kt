@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.data.vendors.local.objectRequest
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
 import kotlinx.serialization.Serializable
 
 @Entity
@@ -18,8 +19,14 @@ data class RealEstateRequest(
     val surface: String,
     @ColumnInfo(name = "description")
     val description: String,
-    @ColumnInfo(name = "interest_point")
-    val interestPoint: String,
+    @ColumnInfo(name = "school")
+    val school: Boolean,
+    @ColumnInfo(name = "commerce")
+    val commerce: Boolean,
+    @ColumnInfo(name = "parc")
+    val parc: Boolean,
+    @ColumnInfo(name = "train_station")
+    val trainStation: Boolean,
     @ColumnInfo(name = "is_sold")
     val isSold: Boolean,
     @ColumnInfo(name = "entry_date")
