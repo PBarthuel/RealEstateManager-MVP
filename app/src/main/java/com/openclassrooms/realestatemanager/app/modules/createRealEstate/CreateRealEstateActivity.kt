@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.app.modules.realEstateCreate
+package com.openclassrooms.realestatemanager.app.modules.createRealEstate
 
 import android.app.Activity
 import android.content.Intent
@@ -16,7 +16,7 @@ import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAd
 import com.openclassrooms.realestatemanager.app.ui.popups.AddingPhotoPopUpDialogFragment
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.app.utils.viewExtension.setClickWithDelay
-import com.openclassrooms.realestatemanager.databinding.ActivityRealEstateCreateBinding
+import com.openclassrooms.realestatemanager.databinding.ActivityCreateRealEstateBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
 import com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem.UIPhotoItem
 import com.openclassrooms.realestatemanager.presenter.modules.createRealEstate.CreateRealEstatePresenter
@@ -30,7 +30,7 @@ import pl.aprilapps.easyphotopicker.MediaSource
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPhotoClickListener {
+class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPhotoClickListener {
 
     @Inject
     lateinit var adapter: PhotoListAdapter
@@ -38,7 +38,7 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     @Inject
     lateinit var presenter: CreateRealEstatePresenter
     
-    private val binding by activityViewBinding(ActivityRealEstateCreateBinding::inflate)
+    private val binding by activityViewBinding(ActivityCreateRealEstateBinding::inflate)
     
     private lateinit var photoImagePicker: EasyImage
 
@@ -46,9 +46,12 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     private val showAddressSearchResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when (result.resultCode) {
-                // TODO recuperer l'address ici
+                RESULT_ADDRESS -> {
+                    result.data?.getParcelableExtra<UIAddressItem>(AddressSearchActivity.INTENT_ADDRESS_ITEM_DATA)
+                        ?.let { item -> presenter.didChooseAddress(item) }
+                }
             }
-            binding.countryEditText.clearFocus()
+            binding.addressEditText.clearFocus()
         }
     //endregion
     
@@ -68,6 +71,11 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     
     private fun setupUI() {
         with(binding) {
+            photoImagePicker = EasyImage.Builder(this@CreateRealEstateActivity)
+                .setChooserTitle("Select a way")
+                .setChooserType(ChooserType.CAMERA_AND_GALLERY)
+                .build()
+
             submitButton.setClickWithDelay {
                 presenter.didSubmitRealEstate(
                     type = typeEditText.text.toString(),
@@ -82,17 +90,10 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                     totalRoomNumber = totalRoomNumberEditText.text.toString(),
                     bedroomNumber = bedroomNumberEditText.text.toString(),
                     bathroomNumber = bathroomNumberEditText.text.toString(),
-                    UIAddressItem(
-                        country = countryEditText.text.toString(),
-                        road = roadEditText.text.toString(),
-                        houseNumber = houseNumberEditText.text.toString(),
-                        city = cityEditText.text.toString(),
-                        postalCode = postalCodeEditText.text.toString()
-                    )
                 )
             }
 
-            countryEditText.setOnFocusChangeListener { _, hasFocus ->
+            addressEditText.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     Intent(applicationContext, AddressSearchActivity::class.java)
                         .also { intent -> showAddressSearchResult.launch(intent) }
@@ -100,11 +101,7 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
             }
             
             photoButton.setClickWithDelay {
-                photoImagePicker = EasyImage.Builder(this@RealEstateCreateActivity)
-                    .setChooserTitle("Select a way")
-                    .setChooserType(ChooserType.CAMERA_AND_GALLERY)
-                    .build()
-                    .also { picker -> picker.openChooser(this@RealEstateCreateActivity) }
+                photoImagePicker.openChooser(this@CreateRealEstateActivity)
             }
         }
     }
@@ -115,11 +112,11 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                 UCrop.of(Uri.fromFile(imageFiles[0].file), Uri.fromFile(imageFiles[0].file))
                     .withAspectRatio(1.0f, 1.0f)
                     .withMaxResultSize(IMAGE_MAX_SIZE, IMAGE_MAX_SIZE)
-                    .start(this@RealEstateCreateActivity)
+                    .start(this@CreateRealEstateActivity)
             }
             
             override fun onImagePickerError(error: Throwable, source: MediaSource) {
-                Toast.makeText(this@RealEstateCreateActivity, getString(R.string.error_photo_format), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CreateRealEstateActivity, getString(R.string.error_photo_format), Toast.LENGTH_SHORT).show()
             }
             
             override fun onCanceled(source: MediaSource) {}
@@ -134,7 +131,7 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                     }.show(supportFragmentManager)
                 }
             } else if (resultCode == UCrop.RESULT_ERROR) {
-                Toast.makeText(this@RealEstateCreateActivity, getString(R.string.error_photo_format), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CreateRealEstateActivity, getString(R.string.error_photo_format), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -150,6 +147,8 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
         adapter.notifyDataSetChanged()
         adapter.submitList(list)
     }
+
+    override fun onShowAddress(address: String) { binding.addressEditText.setText(address) }
 
     override fun onReceiveWrongTypeFormatError() {
         binding.typeTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
@@ -213,5 +212,6 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
 
     companion object {
         const val IMAGE_MAX_SIZE = 512
+        const val RESULT_ADDRESS = 100
     }
 }

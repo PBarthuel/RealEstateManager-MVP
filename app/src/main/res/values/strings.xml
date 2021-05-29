@@ -38,11 +38,7 @@
     <string name="real_estate_entry_date">Entry date</string>
     <string name="real_estate_exit_date">Exit date</string>
     <string name="real_estate_agent">Agent</string>
-    <string name="real_estate_country">Country</string>
-    <string name="real_estate_road">Road</string>
-    <string name="real_estate_house_number">House number</string>
-    <string name="real_estate_city">City</string>
-    <string name="real_estate_postal_code">Postal code</string>
+    <string name="real_estate_address">Address</string>
     <string name="real_estate_total_room_number">Total room</string>
     <string name="real_estate_bedroom_number">Bedroom</string>
     <string name="real_estate_bathroom_number">Bathroom</string>

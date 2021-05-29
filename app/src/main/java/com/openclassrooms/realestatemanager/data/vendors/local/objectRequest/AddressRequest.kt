@@ -13,22 +13,25 @@ data class AddressRequest (
     @PrimaryKey(autoGenerate = true) var addressId: Long,
     val realEstateOwnerId: Long,
     @ColumnInfo(name = "country")
-    val country: String,
+    val country: String?,
     @ColumnInfo(name = "city")
-    val city: String,
-    @ColumnInfo(name = "house_number")
-    val houseNumber: String,
+    val city: String?,
     @ColumnInfo(name = "road")
     val road: String,
     @ColumnInfo(name = "postal_code")
-    val postalCode: String
+    val postalCode: String,
+    @ColumnInfo(name = "latitude")
+    val latitude: Double,
+    @ColumnInfo(name = "longitude")
+    val longitude: Double
 ) : DomainModelConvertible<DomainAddress> {
     override fun toDomain(): DomainAddress =
         DomainAddress(
-                country,
-                city,
-                houseNumber,
-                road,
-                postalCode
+            country,
+            city,
+            road,
+            postalCode,
+            latitude,
+            longitude
         )
 }

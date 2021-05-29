@@ -13,7 +13,7 @@ class AddressSearchViewHolder(
     fun onBind(item: UIAddressItem, delegateOn: OnAddressClickListener?) {
         with(binding) {
             roadTextView.text = item.road
-            if (item.city.isEmpty()) {
+            if (item.city.isNullOrEmpty()) {
                 cityTextView.isVisible = false
             } else {
                 cityTextView.isVisible = true

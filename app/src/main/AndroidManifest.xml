@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".app.modules.realEstateCreate.RealEstateCreateActivity"/>
+            android:name=".app.modules.createRealEstate.CreateRealEstateActivity"/>
         <activity
             android:name=".app.modules.addressSearch.AddressSearchActivity"/>
 

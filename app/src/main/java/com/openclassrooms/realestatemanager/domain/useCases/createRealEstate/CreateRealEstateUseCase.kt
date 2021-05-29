@@ -26,13 +26,7 @@ class CreateRealEstateUseCase @Inject constructor(
                 !totalRoomNumber.isOnlyNumber() -> Single.error(DomainFormException.WrongTotalRoomNumberFormat("$totalRoomNumber format is not valid"))
                 !bedroomNumber.isOnlyNumber() -> Single.error(DomainFormException.WrongBedRoomNumberFormat("$bedroomNumber format is not valid"))
                 !bathroomNumber.isOnlyNumber() -> Single.error(DomainFormException.WrongBathRoomNumberFormat("$bathroomNumber format is not valid"))
-                !address.country.isNameValid() -> Single.error(DomainFormException.WrongCountryFormat("${address.country} format is not valid"))
-                !address.road.isNameValid() -> Single.error(DomainFormException.WrongRoadFormat("${address.road} format is not valid"))
-                !address.houseNumber.isOnlyNumber() -> Single.error(DomainFormException.WrongHouseNumberFormat("${address.houseNumber} format is not valid"))
-                !address.city.isNameValid() -> Single.error(DomainFormException.WrongCityFormat("${address.city} format is not valid"))
-                !address.postalCode.isOnlyNumber() -> Single.error(DomainFormException.WrongPostalCodeFormat("${address.postalCode} format is not valid"))
                 else -> {
-
                     realEstateRepository.createRealEstate(
                         DomainRealEstateMasterDetail(
                             id = id,
@@ -54,9 +48,10 @@ class CreateRealEstateUseCase @Inject constructor(
                             address = DomainAddress(
                                 country = address.country,
                                 city = address.city,
-                                houseNumber = address.houseNumber,
                                 road = address.road,
-                                postalCode = address.postalCode
+                                postalCode = address.postalCode,
+                                latitude = address.latitude,
+                                longitude = address.longitude
                             ),
                             photos = photos.map { photo ->
                                 DomainPhoto(
