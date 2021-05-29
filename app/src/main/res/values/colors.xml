@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="teal_700">#FF018786</color>
+    <color name="grayscale_100">#F4F5F5</color>
     <color name="grayscale_200">#E6E7E8</color>
     <color name="grayscale_300">#CBCDCF</color>
     <color name="grayscale_500">#53565A</color>

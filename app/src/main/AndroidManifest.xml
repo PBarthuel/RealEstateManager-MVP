@@ -25,6 +25,8 @@
         </activity>
         <activity
             android:name=".app.modules.realEstateCreate.RealEstateCreateActivity"/>
+        <activity
+            android:name=".app.modules.addressSearch.AddressSearchActivity"/>
 
         <!-- UCrop -->
         <activity

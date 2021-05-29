@@ -5,9 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.app.modules.addressSearch.AddressSearchActivity
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.OnPhotoClickListener
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.app.ui.popups.AddingPhotoPopUpDialogFragment
@@ -38,6 +41,16 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     private val binding by activityViewBinding(ActivityRealEstateCreateBinding::inflate)
     
     private lateinit var photoImagePicker: EasyImage
+
+    //region ActivityResult
+    private val showAddressSearchResult: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            when (result.resultCode) {
+                // TODO recuperer l'address ici
+            }
+            binding.countryEditText.clearFocus()
+        }
+    //endregion
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +90,13 @@ class RealEstateCreateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                         postalCode = postalCodeEditText.text.toString()
                     )
                 )
+            }
+
+            countryEditText.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    Intent(applicationContext, AddressSearchActivity::class.java)
+                        .also { intent -> showAddressSearchResult.launch(intent) }
+                }
             }
             
             photoButton.setClickWithDelay {
