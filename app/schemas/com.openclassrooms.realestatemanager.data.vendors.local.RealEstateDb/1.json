@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "6e8b4b46d34b426bf29f9b4d99273d01",
+    "identityHash": "165567c51a22c5b3bc9c3a33d7974fec",
     "entities": [
       {
         "tableName": "RealEstateRequest",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`realEstateId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL, `price` TEXT NOT NULL, `surface` TEXT NOT NULL, `description` TEXT NOT NULL, `interest_point` TEXT NOT NULL, `is_sold` INTEGER NOT NULL, `entry_date` TEXT NOT NULL, `exit_date` TEXT NOT NULL, `agent` TEXT NOT NULL, `total_room_number` TEXT NOT NULL, `bedroom_number` TEXT NOT NULL, `bathroom_number` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`realEstateId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `type` TEXT NOT NULL, `price` TEXT NOT NULL, `surface` TEXT NOT NULL, `description` TEXT NOT NULL, `school` INTEGER NOT NULL, `commerce` INTEGER NOT NULL, `parc` INTEGER NOT NULL, `train_station` INTEGER NOT NULL, `is_sold` INTEGER NOT NULL, `entry_date` TEXT NOT NULL, `exit_date` TEXT NOT NULL, `agent` TEXT NOT NULL, `total_room_number` TEXT NOT NULL, `bedroom_number` TEXT NOT NULL, `bathroom_number` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "realEstateId",
@@ -39,9 +39,27 @@
             "notNull": true
           },
           {
-            "fieldPath": "interestPoint",
-            "columnName": "interest_point",
-            "affinity": "TEXT",
+            "fieldPath": "school",
+            "columnName": "school",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "commerce",
+            "columnName": "commerce",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "parc",
+            "columnName": "parc",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "trainStation",
+            "columnName": "train_station",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -194,7 +212,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6e8b4b46d34b426bf29f9b4d99273d01')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '165567c51a22c5b3bc9c3a33d7974fec')"
     ]
   }
 }

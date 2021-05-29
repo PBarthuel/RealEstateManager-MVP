@@ -17,7 +17,7 @@ interface CreateRealEstateView : FormErrorProtocol {
 }
 
 interface CreateRealEstatePresenter: DisposablePresenter<CreateRealEstateView> {
-    fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, interestPoint: String, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String, address: UIAddressItem)
+    fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, school: Boolean, commerce: Boolean, parc: Boolean, trainStation: Boolean, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String, address: UIAddressItem)
     fun didAddPhoto(photoName: String, base64ImageData: String)
     fun didDeletePhoto(photo: UIPhotoItem)
 }
@@ -40,7 +40,10 @@ class CreateRealEstatePresenterImpl @Inject constructor(
         price: String,
         surface: String,
         description: String,
-        interestPoint: String,
+        school: Boolean,
+        commerce: Boolean,
+        parc: Boolean,
+        trainStation: Boolean,
         agent: String,
         totalRoomNumber: String,
         bedroomNumber: String,
@@ -53,7 +56,10 @@ class CreateRealEstatePresenterImpl @Inject constructor(
             price = price,
             surface = surface,
             description = description,
-            interestPoint = interestPoint,
+            school = school,
+            commerce = commerce,
+            parc = parc,
+            trainStation = trainStation,
             agent = agent,
             isSold = false,
             entryDate = Utils.todayDate,
@@ -70,8 +76,8 @@ class CreateRealEstatePresenterImpl @Inject constructor(
             .observeOn(networkSchedulers.main)
             .subscribe({
                 view?.onDismissView()
-            }, {
-                view?.onReceiveError(it)
+            }, { error ->
+                view?.onReceiveError(error)
             })
     }
     

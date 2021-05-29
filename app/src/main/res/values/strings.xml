@@ -28,10 +28,13 @@
     <string name="master_detail_bedroom_number">Number of bedrooms</string>
 
     <string name="real_estate_type">type</string>
-    <string name="real_estate_price">Price</string>
-    <string name="real_estate_surface">Surface</string>
+    <string name="real_estate_price">Price (in dollar)</string>
+    <string name="real_estate_surface">Surface (in m2)</string>
     <string name="real_estate_description">Description</string>
-    <string name="real_estate_interest_point">Interest Point</string>
+    <string name="real_estate_school">School</string>
+    <string name="real_estate_commerce">Commerce</string>
+    <string name="real_estate_parc">Parc</string>
+    <string name="real_estate_train_station">Train station</string>
     <string name="real_estate_entry_date">Entry date</string>
     <string name="real_estate_exit_date">Exit date</string>
     <string name="real_estate_agent">Agent</string>
