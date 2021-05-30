@@ -11,11 +11,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RealEstateMasterDetailFragment : Fragment() {
+class RealEstateMasterDetailFragment : Fragment(), RealEstateListFragmentListener {
     
     private var _binding: FragmentRealEstateMasterDetailBinding? = null
     private val binding get() = _binding!!
@@ -51,4 +52,10 @@ class RealEstateMasterDetailFragment : Fragment() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    //region RealEstateListFragmentListener Callback
+    override fun didClickRealEstate(id: Long) {
+        // TODO pur presenter update view here
+    }
+    //endregion
 }

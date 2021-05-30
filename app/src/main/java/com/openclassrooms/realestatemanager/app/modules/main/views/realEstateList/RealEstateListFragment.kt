@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +10,11 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.OnRealEstateClickListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.RealEstateListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateListBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateCondenseItem.UIRealEstateCondenseItem
@@ -22,8 +23,12 @@ import com.openclassrooms.realestatemanager.presenter.modules.main.views.realEst
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+interface RealEstateListFragmentListener {
+    fun didClickRealEstate(id: Long)
+}
+
 @AndroidEntryPoint
-class RealEstateListFragment : Fragment(), RealEstateListView {
+class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClickListener {
 
     @Inject
     lateinit var presenter: RealEstateListPresenter
@@ -34,7 +39,15 @@ class RealEstateListFragment : Fragment(), RealEstateListView {
     private var _binding: FragmentRealEstateListBinding? = null
     private val binding get() = _binding!!
 
+    private var listener: RealEstateListFragmentListener? = null
+
     private var detailFragmentLayout: FrameLayout? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        listener = context as RealEstateListFragmentListener
+    }
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -84,11 +97,18 @@ class RealEstateListFragment : Fragment(), RealEstateListView {
             adapter = this@RealEstateListFragment.adapter
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
+        adapter.onRealEstateClickListener = this
     }
 
     //region RealEstateListView Callbacks
     override fun onSetupRealEstates(list: List<UIRealEstateCondenseItem>) {
         adapter.submitList(list)
+    }
+    //endregion
+
+    //region OnRealEstateClickListener Callback
+    override fun onRealEstateClicked(item: UIRealEstateCondenseItem) {
+        listener?.didClickRealEstate(item.id)
     }
     //endregion
 }
