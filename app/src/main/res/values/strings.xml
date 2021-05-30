@@ -50,6 +50,8 @@
     <string name="error_photo_format">The image sent is not in the correct format, please try again</string>
     <string name="error_incorrect_price">Price is incorrect</string>
 
+    <string name="real_estate_edit_warning">You must select a detail first !</string>
+
     <string name="address_search_address">Address</string>
     <string name="address_search_more_info_text">Hmmm, I need more info to find…</string>
     <string name="address_search_missing_location_permissions_snackbar_text">You have not accepted the geolocation, you can go to the settings to modify</string>

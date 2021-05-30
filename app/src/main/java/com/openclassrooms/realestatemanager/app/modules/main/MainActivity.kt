@@ -9,8 +9,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateListFragment
+import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragment
+import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
 import com.openclassrooms.realestatemanager.app.utils.showAppSettings
 import com.openclassrooms.realestatemanager.presenter.modules.main.MainPresenter
@@ -20,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity: AppCompatActivity(), MainView, PermissionErrorProtocol {
+class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListener, PermissionErrorProtocol {
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -112,6 +113,15 @@ class MainActivity: AppCompatActivity(), MainView, PermissionErrorProtocol {
         GeolocationPopUpDialog {
             showAppSettings()
         }.show(supportFragmentManager)
+    }
+    //endregion
+
+    //region RealEstateListFragmentListener Callback
+    override fun didClickRealEstate(id: Long) {
+        if(detailFragmentLayout == null) {
+            displayedFragment(1)
+        }
+        masterDetailFragment.presenter.setup(id)
     }
     //endregion
 }

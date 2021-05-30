@@ -13,7 +13,7 @@ class PhotoListViewHolder(
 
     fun onBind(item: UIPhotoItem, onRealEstatePhotoClickListener: OnPhotoClickListener?) {
         with(binding) {
-            titleTextView.text = item.roomName
+            titleTextView.text = item.roomType
             val decodedString = Base64.decode(item.photoReference, Base64.DEFAULT)
             BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)?.let { imageView.setImageBitmap(it) }
             listConstraintLayout.setOnClickListener {

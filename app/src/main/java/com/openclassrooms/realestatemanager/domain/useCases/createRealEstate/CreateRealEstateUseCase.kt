@@ -56,7 +56,7 @@ class CreateRealEstateUseCase @Inject constructor(
                             photos = photos.map { photo ->
                                 DomainPhoto(
                                     photoReference = photo.photoReference,
-                                    roomType = photo.roomName
+                                    roomType = photo.roomType
                                 )
                             }
                         )

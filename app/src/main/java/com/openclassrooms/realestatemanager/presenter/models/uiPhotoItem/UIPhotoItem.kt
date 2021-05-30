@@ -2,5 +2,5 @@ package com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem
 
 data class UIPhotoItem (
     val photoReference: String,
-    val roomName: String?
+    val roomType: String?
 )

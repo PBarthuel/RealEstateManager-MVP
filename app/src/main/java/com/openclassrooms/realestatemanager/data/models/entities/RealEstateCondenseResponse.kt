@@ -31,7 +31,8 @@ data class RealEstateCondenseResponse(
                     address.city,
                     price,
                     isSold,
-                    photo[0].photoReference
+                ""
+                    //photo[0].photoReference
             )
         }
 }

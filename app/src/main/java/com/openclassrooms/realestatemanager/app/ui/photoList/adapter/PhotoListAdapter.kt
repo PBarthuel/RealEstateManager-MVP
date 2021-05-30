@@ -23,10 +23,10 @@ class PhotoListAdapter @Inject constructor() : ListAdapter<UIPhotoItem, PhotoLis
     private object UIPhotoItemDiffUtil : DiffUtil.ItemCallback<UIPhotoItem>() {
         override fun areItemsTheSame(oldItem: UIPhotoItem, newItem: UIPhotoItem): Boolean =
             oldItem.photoReference == newItem.photoReference
-                    && oldItem.roomName == newItem.roomName
+                    && oldItem.roomType == newItem.roomType
 
         override fun areContentsTheSame(oldItem: UIPhotoItem, newItem: UIPhotoItem): Boolean =
             oldItem.photoReference == newItem.photoReference
-                    && oldItem.roomName == newItem.roomName
+                    && oldItem.roomType == newItem.roomType
     }
 }
