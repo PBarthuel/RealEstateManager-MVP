@@ -31,7 +31,14 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     
     override var view: CreateRealEstateView? = null
 
-    var address: UIAddressItem? = null
+    var address: UIAddressItem = UIAddressItem(
+        "you need",
+        "to enable",
+        "your network connection",
+        "and/or edit to put an address",
+        0.0,
+        0.0
+    )
     var photos: ArrayList<UIPhotoItem> = arrayListOf()
     
     override fun attach(view: CreateRealEstateView) {
@@ -52,8 +59,6 @@ class CreateRealEstatePresenterImpl @Inject constructor(
         bedroomNumber: String,
         bathroomNumber: String,
     ) {
-        val address = address ?: return
-
         val item = UIRealEstateMasterDetailItem(
             id = 0,
             type = type,

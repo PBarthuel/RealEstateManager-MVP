@@ -9,11 +9,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toFile
+import androidx.core.view.isVisible
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.addressSearch.AddressSearchActivity
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.OnPhotoClickListener
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.app.ui.popups.AddingPhotoPopUpDialogFragment
+import com.openclassrooms.realestatemanager.app.utils.Utils
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.app.utils.viewExtension.setClickWithDelay
 import com.openclassrooms.realestatemanager.databinding.ActivityCreateRealEstateBinding
@@ -93,12 +95,19 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                 )
             }
 
-            addressEditText.setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    Intent(applicationContext, AddressSearchActivity::class.java)
-                        .also { intent -> showAddressSearchResult.launch(intent) }
+            if(Utils.isInternetAvailable(this@CreateRealEstateActivity)) {
+                addressViewSwitcher.displayedChild = 0
+                addressEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (hasFocus) {
+                        Intent(applicationContext, AddressSearchActivity::class.java)
+                            .also { intent -> showAddressSearchResult.launch(intent) }
+                    }
                 }
+            } else {
+                addressViewSwitcher.displayedChild = 1
+                addressTextInputLayout.isVisible = false
             }
+
             
             photoButton.setClickWithDelay {
                 photoImagePicker.openChooser(this@CreateRealEstateActivity)
@@ -142,7 +151,10 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     }
     
     //region CreateRealEstateView callbacks
-    override fun onDismissView() { finish() }
+    override fun onDismissView() {
+        Toast.makeText(this, "You have created a RealEstate, congratulations !!!", Toast.LENGTH_LONG).show()
+        finish()
+    }
     override fun onUpdateList(list: List<UIPhotoItem>) {
         adapter.notifyDataSetChanged()
         adapter.submitList(list)

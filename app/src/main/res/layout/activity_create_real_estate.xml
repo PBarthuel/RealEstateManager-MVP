@@ -226,22 +226,35 @@
                 android:hint="@string/real_estate_agent" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/addressTextInputLayout"
+        <ViewSwitcher
+            android:id="@+id/addressViewSwitcher"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:measureAllChildren="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/searchGuideLineHalf"
             app:layout_constraintTop_toBottomOf="@id/interestPointConstraintLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/addressEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addressTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lines="1"
-                android:hint="@string/address_search_address" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="12dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addressEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:hint="@string/address_search_address" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                android:text="@string/real_estate_no_wifi_address" />
+        </ViewSwitcher>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/totalRoomNumberTextInputLayout"

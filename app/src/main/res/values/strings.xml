@@ -39,6 +39,7 @@
     <string name="real_estate_exit_date">Exit date</string>
     <string name="real_estate_agent">Agent</string>
     <string name="real_estate_address">Address</string>
+    <string name="real_estate_no_wifi_address">You need to have a network connection to enter an address</string>
     <string name="real_estate_total_room_number">Total room</string>
     <string name="real_estate_bedroom_number">Bedroom</string>
     <string name="real_estate_bathroom_number">Bathroom</string>
