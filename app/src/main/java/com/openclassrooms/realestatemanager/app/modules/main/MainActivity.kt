@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateListFragment
+import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragment
 import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
 import com.openclassrooms.realestatemanager.app.utils.showAppSettings

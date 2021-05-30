@@ -1,15 +1,18 @@
 package com.openclassrooms.realestatemanager.data.repositories.local
 
+import com.openclassrooms.realestatemanager.data.utils.throwDomainExceptionOnError
 import com.openclassrooms.realestatemanager.data.vendors.local.RealEstateDao
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.AddressRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.PhotoRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.RealEstateRequest
+import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateCondense
 import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
 import com.openclassrooms.realestatemanager.domain.repositories.local.RealEstateRepository
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.core.SingleOnSubscribe
 import java.lang.Exception
 import javax.inject.Inject
+import kotlin.math.sin
 
 class RealEstateRepositoryImpl @Inject constructor(
     private val realEstateDao: RealEstateDao
@@ -69,4 +72,9 @@ class RealEstateRepositoryImpl @Inject constructor(
                 }
             }
         }
+
+    override fun getRealEstateCondense(): Single<List<DomainRealEstateCondense>> =
+                realEstateDao.getRealEstateCondense().map { realEstatesCondensesResponses ->
+                    realEstatesCondensesResponses.map { it.toDomain() }
+                }.throwDomainExceptionOnError()
 }

@@ -1,4 +1,4 @@
-package com.openclassrooms.realestatemanager.app.modules.main.views
+package com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,14 +9,27 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.RealEstateListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateListBinding
+import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateCondenseItem.UIRealEstateCondenseItem
+import com.openclassrooms.realestatemanager.presenter.modules.main.views.realEstateList.RealEstateListPresenter
+import com.openclassrooms.realestatemanager.presenter.modules.main.views.realEstateList.RealEstateListView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class RealEstateListFragment : Fragment() {
+class RealEstateListFragment : Fragment(), RealEstateListView {
+
+    @Inject
+    lateinit var presenter: RealEstateListPresenter
+
+    @Inject
+    lateinit var adapter: RealEstateListAdapter
     
     private var _binding: FragmentRealEstateListBinding? = null
     private val binding get() = _binding!!
@@ -26,7 +39,9 @@ class RealEstateListFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
         _binding = FragmentRealEstateListBinding.inflate(layoutInflater)
-        
+
+        presenter.attach(this)
+
         setHasOptionsMenu(true)
         
         return binding.root
@@ -34,8 +49,10 @@ class RealEstateListFragment : Fragment() {
     
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-    
+
+        setupAdapter()
         setupUI()
+        presenter.setup()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -61,4 +78,17 @@ class RealEstateListFragment : Fragment() {
     private fun setupUI() {
         detailFragmentLayout = view?.rootView?.findViewById(R.id.detailFragment)
     }
+
+    private fun setupAdapter() {
+        with(binding.recyclerView) {
+            adapter = this@RealEstateListFragment.adapter
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        }
+    }
+
+    //region RealEstateListView Callbacks
+    override fun onSetupRealEstates(list: List<UIRealEstateCondenseItem>) {
+        adapter.submitList(list)
+    }
+    //endregion
 }

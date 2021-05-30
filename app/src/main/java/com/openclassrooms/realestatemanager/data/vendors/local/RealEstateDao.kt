@@ -22,7 +22,7 @@ interface RealEstateDao {
     
     @Transaction
     @Query("SELECT * FROM RealEstateRequest")
-    fun getRealEstateCondense(): List<RealEstateCondenseResponse>
+    fun getRealEstateCondense(): Single<List<RealEstateCondenseResponse>>
     
     @Insert
     fun createRealEstate(realEstateRequest: RealEstateRequest) : Long
