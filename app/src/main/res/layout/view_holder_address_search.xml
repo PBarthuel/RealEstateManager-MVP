@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".app.modules.addressSearch.viewHolder.SearchAddressViewHolder">
+    tools:context=".app.modules.addressSearch.viewHolder.AddressSearchViewHolder">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/containerConstraintLayout"
@@ -45,7 +45,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/streetTextView"
+                android:id="@+id/roadTextView"
                 style="@style/BodyMedium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

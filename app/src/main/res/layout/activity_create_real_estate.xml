@@ -226,86 +226,35 @@
                 android:hint="@string/real_estate_agent" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/countryTextInputLayout"
+        <ViewSwitcher
+            android:id="@+id/addressViewSwitcher"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
+            android:measureAllChildren="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/searchGuideLineHalf"
             app:layout_constraintTop_toBottomOf="@id/interestPointConstraintLayout">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/countryEditText"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/addressTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/real_estate_country" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="12dp">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/roadTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:layout_constraintEnd_toEndOf="@id/searchGuideLineHalf"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/agentTextInputLayout">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/addressEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lines="1"
+                    android:hint="@string/address_search_address" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/roadEditText"
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/real_estate_road" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/houseNumberTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/searchGuideLineHalf"
-            app:layout_constraintTop_toBottomOf="@id/agentTextInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/houseNumberEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/real_estate_house_number" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/cityTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:layout_constraintEnd_toEndOf="@id/searchGuideLineHalf"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/roadTextInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/cityEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/real_estate_city" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/postalCodeTextInputLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/searchGuideLineHalf"
-            app:layout_constraintTop_toBottomOf="@id/houseNumberTextInputLayout">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/postalCodeEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/real_estate_postal_code"
-                android:inputType="number" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_margin="12dp"
+                android:text="@string/real_estate_no_wifi_address" />
+        </ViewSwitcher>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/totalRoomNumberTextInputLayout"
@@ -314,7 +263,7 @@
             android:layout_margin="12dp"
             app:layout_constraintEnd_toStartOf="@id/bedroomNumberTextInputLayout"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cityTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/agentTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/totalRoomNumberEditText"
@@ -331,7 +280,7 @@
             android:layout_margin="12dp"
             app:layout_constraintEnd_toStartOf="@id/bathroomNumberTextInputLayout"
             app:layout_constraintStart_toEndOf="@id/totalRoomNumberTextInputLayout"
-            app:layout_constraintTop_toBottomOf="@id/cityTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/agentTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bedroomNumberEditText"
@@ -348,7 +297,7 @@
             android:layout_margin="12dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bedroomNumberTextInputLayout"
-            app:layout_constraintTop_toBottomOf="@id/cityTextInputLayout">
+            app:layout_constraintTop_toBottomOf="@id/agentTextInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/bathroomNumberEditText"

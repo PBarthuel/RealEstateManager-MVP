@@ -8,10 +8,9 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.app.modules.realEstateCreate.RealEstateCreateActivity
+import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +36,7 @@ class RealEstateMasterDetailFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_activity_creation -> {
-                Intent(context, RealEstateCreateActivity::class.java).also { startActivity(it) }
+                Intent(context, CreateRealEstateActivity::class.java).also { startActivity(it) }
             }
             R.id.menu_activity_modification -> {
                 if (binding.descriptionContentTextView.text.isNullOrEmpty()) {

@@ -46,9 +46,10 @@ class RealEstateRepositoryImpl @Inject constructor(
                                 realEstateOwnerId = id,
                                 country = country,
                                 city = city,
-                                houseNumber = houseNumber,
                                 road = road,
-                                postalCode = postalCode
+                                postalCode = postalCode,
+                                latitude = latitude,
+                                longitude = longitude
                             )
                         )
                     }

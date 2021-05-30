@@ -38,11 +38,8 @@
     <string name="real_estate_entry_date">Entry date</string>
     <string name="real_estate_exit_date">Exit date</string>
     <string name="real_estate_agent">Agent</string>
-    <string name="real_estate_country">Country</string>
-    <string name="real_estate_road">Road</string>
-    <string name="real_estate_house_number">House number</string>
-    <string name="real_estate_city">City</string>
-    <string name="real_estate_postal_code">Postal code</string>
+    <string name="real_estate_address">Address</string>
+    <string name="real_estate_no_wifi_address">You need to have a network connection to enter an address</string>
     <string name="real_estate_total_room_number">Total room</string>
     <string name="real_estate_bedroom_number">Bedroom</string>
     <string name="real_estate_bathroom_number">Bathroom</string>
@@ -55,4 +52,8 @@
 
     <string name="address_search_address">Address</string>
     <string name="address_search_more_info_text">Hmmm, I need more info to find…</string>
+    <string name="address_search_missing_location_permissions_snackbar_text">You have not accepted the geolocation, you can go to the settings to modify</string>
+
+    <string name="geolocation_popup_title">You must enable your location to have the full experience of the app !</string>
+    <string name="geolocation_popup_enable_button">Enable</string>
 </resources>

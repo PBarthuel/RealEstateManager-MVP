@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.app.modules.realEstateCreate.RealEstateCreateActivity
+import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateListBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -48,7 +48,7 @@ class RealEstateListFragment : Fragment() {
         if (detailFragmentLayout == null) {
             when (item.itemId) {
                 R.id.menu_activity_creation -> {
-                    Intent(context, RealEstateCreateActivity::class.java).also { startActivity(it) }
+                    Intent(context, CreateRealEstateActivity::class.java).also { startActivity(it) }
                 }
                 R.id.menu_activity_search -> {
                     // TODO intent for future searchActivity

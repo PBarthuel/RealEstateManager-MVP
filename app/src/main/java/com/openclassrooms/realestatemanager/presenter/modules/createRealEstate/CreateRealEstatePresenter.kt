@@ -14,12 +14,14 @@ import javax.inject.Inject
 interface CreateRealEstateView : FormErrorProtocol {
     fun onDismissView()
     fun onUpdateList(list: List<UIPhotoItem>)
+    fun onShowAddress(address: String)
 }
 
 interface CreateRealEstatePresenter: DisposablePresenter<CreateRealEstateView> {
-    fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, school: Boolean, commerce: Boolean, parc: Boolean, trainStation: Boolean, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String, address: UIAddressItem)
+    fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, school: Boolean, commerce: Boolean, parc: Boolean, trainStation: Boolean, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String)
     fun didAddPhoto(photoName: String, base64ImageData: String)
     fun didDeletePhoto(photo: UIPhotoItem)
+    fun didChooseAddress(address: UIAddressItem)
 }
 
 class CreateRealEstatePresenterImpl @Inject constructor(
@@ -28,7 +30,15 @@ class CreateRealEstatePresenterImpl @Inject constructor(
 ) : CreateRealEstatePresenter {
     
     override var view: CreateRealEstateView? = null
-    
+
+    var address: UIAddressItem = UIAddressItem(
+        "you need",
+        "to enable",
+        "your network connection",
+        "and/or edit to put an address",
+        0.0,
+        0.0
+    )
     var photos: ArrayList<UIPhotoItem> = arrayListOf()
     
     override fun attach(view: CreateRealEstateView) {
@@ -48,7 +58,6 @@ class CreateRealEstatePresenterImpl @Inject constructor(
         totalRoomNumber: String,
         bedroomNumber: String,
         bathroomNumber: String,
-        address: UIAddressItem,
     ) {
         val item = UIRealEstateMasterDetailItem(
             id = 0,
@@ -89,5 +98,10 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     override fun didDeletePhoto(photo: UIPhotoItem) {
         photos.remove(photo)
         view?.onUpdateList(photos)
+    }
+
+    override fun didChooseAddress(address: UIAddressItem) {
+        this.address = address
+        view?.onShowAddress(address.getString())
     }
 }

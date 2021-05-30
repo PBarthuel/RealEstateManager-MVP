@@ -5,6 +5,7 @@ plugins {
     id 'kotlinx-serialization'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -87,6 +88,11 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.github.jkwiecien:EasyImage:3.2.0'
     implementation 'com.github.yalantis:ucrop:2.2.6'
+
+    implementation 'com.karumi:dexter:6.2.2'
+
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 
     // Room
     def room_version = "2.3.0"
