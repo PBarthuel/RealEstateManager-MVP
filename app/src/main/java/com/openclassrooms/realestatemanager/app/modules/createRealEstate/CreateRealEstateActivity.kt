@@ -95,7 +95,7 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                 )
             }
 
-            if(Utils.isInternetAvailable(this@CreateRealEstateActivity)) {
+            if (Utils.isInternetAvailable(this@CreateRealEstateActivity)) {
                 addressViewSwitcher.displayedChild = 0
                 addressEditText.setOnFocusChangeListener { _, hasFocus ->
                     if (hasFocus) {

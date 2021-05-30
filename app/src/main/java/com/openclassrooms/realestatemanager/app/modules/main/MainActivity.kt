@@ -11,10 +11,19 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateListFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragment
+import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
+import com.openclassrooms.realestatemanager.app.utils.showAppSettings
+import com.openclassrooms.realestatemanager.presenter.modules.main.MainPresenter
+import com.openclassrooms.realestatemanager.presenter.modules.main.MainView
+import com.openclassrooms.realestatemanager.presenter.protocols.errorProtocol.PermissionErrorProtocol
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity: AppCompatActivity() {
+class MainActivity: AppCompatActivity(), MainView, PermissionErrorProtocol {
+
+    @Inject
+    lateinit var presenter: MainPresenter
     
     private val listFragment = RealEstateListFragment()
     private val masterDetailFragment = RealEstateMasterDetailFragment()
@@ -24,9 +33,12 @@ class MainActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        
+
+        presenter.attach(this)
+
         setupToolBarAndMenuDrawer()
         setupUI(savedInstanceState)
+        presenter.setup()
     }
     
     private fun setupToolBarAndMenuDrawer() {
@@ -94,4 +106,12 @@ class MainActivity: AppCompatActivity() {
             commit()
         }
     }
+
+    //region GeoLocPermissionsView Callbacks
+    override fun onReceiveBackgroundLocationMissingOnAndroidRError() {
+        GeolocationPopUpDialog {
+            showAppSettings()
+        }.show(supportFragmentManager)
+    }
+    //endregion
 }

@@ -23,3 +23,7 @@ sealed class DomainFormException(override val message: String) : DomainException
 sealed class DomainLocationException(override val message: String) : DomainException() {
     data class EmptyLocationError(override val message: String) : DomainLocationException(message)
 }
+sealed class DomainPermissionException(override val message: String) : DomainException() {
+    data class ReportError(override val message: String) : DomainPermissionException(message)
+    data class BackgroundLocationError(override val message: String) : DomainPermissionException(message)
+}
