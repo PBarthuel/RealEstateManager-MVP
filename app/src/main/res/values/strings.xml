@@ -52,6 +52,7 @@
 
     <string name="address_search_address">Address</string>
     <string name="address_search_more_info_text">Hmmm, I need more info to find…</string>
+    <string name="address_search_missing_location_permissions_snackbar_text">You have not accepted the geolocation, you can go to the settings to modify</string>
 
     <string name="geolocation_popup_title">You must enable your location to have the full experience of the app !</string>
     <string name="geolocation_popup_enable_button">Enable</string>

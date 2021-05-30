@@ -9,7 +9,6 @@ import com.openclassrooms.realestatemanager.presenter.protocols.utils.NetworkSch
 import javax.inject.Inject
 
 interface MainView : PermissionErrorProtocol {
-
 }
 
 interface MainPresenter : DisposablePresenter<MainView> {

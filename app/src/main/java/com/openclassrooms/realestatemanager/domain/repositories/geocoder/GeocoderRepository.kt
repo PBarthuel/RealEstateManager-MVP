@@ -6,4 +6,5 @@ import io.reactivex.rxjava3.core.Observable
 
 interface GeocoderRepository {
     fun getListOfAddresses(query: String): Observable<List<DomainAddress>>
+    fun getUserAddress(): Observable<DomainAddress>
 }

@@ -15,4 +15,9 @@ class GeocoderRepositoryImpl @Inject constructor(
         geocoderServiceProvider.getListOfAddresses(query)
             .map { it.map { addressResponse -> addressResponse.toDomain() } }
             .throwDomainExceptionOnError()
+
+    override fun getUserAddress(): Observable<DomainAddress> =
+        geocoderServiceProvider.getUserAddress()
+            .map { it.toDomain() }
+            .throwDomainExceptionOnError()
 }

@@ -1,18 +1,23 @@
 package com.openclassrooms.realestatemanager.app.modules.addressSearch
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.addressSearch.adapter.AddressSearchAdapter
 import com.openclassrooms.realestatemanager.app.modules.addressSearch.adapter.OnAddressClickListener
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.utils.showAppSettings
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.app.utils.viewExtension.activityRootView
 import com.openclassrooms.realestatemanager.app.utils.viewExtension.setClickWithDelay
+import com.openclassrooms.realestatemanager.app.utils.viewExtension.showShortSnackbar
 import com.openclassrooms.realestatemanager.databinding.ActivityAddressSearchBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
 import com.openclassrooms.realestatemanager.presenter.modules.addressSearch.AddressSearchPresenter
@@ -88,6 +93,22 @@ class AddressSearchActivity: AppCompatActivity(), AddressSearchView, OnAddressCl
             recyclerView.isVisible = true
             adapter.submitList(addresses)
         }
+    }
+
+    override fun onShowMissingPermission() {
+        rootView?.showShortSnackbar(getString(R.string.address_search_missing_location_permissions_snackbar_text), getString(R.string.common_ok)) {
+            showAppSettings()
+        }
+    }
+
+    override fun onReceiveUserAddress(address: UIAddressItem) {
+        val result = CreateRealEstateActivity.RESULT_ADDRESS
+
+        Intent().apply { putExtra(INTENT_ADDRESS_ITEM_DATA, address) }
+            .also { intent ->
+                setResult(result, intent)
+                finish()
+            }
     }
 
     //endregion
