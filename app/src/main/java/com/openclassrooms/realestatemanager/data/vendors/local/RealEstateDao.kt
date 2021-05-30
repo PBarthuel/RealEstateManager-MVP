@@ -18,7 +18,7 @@ interface RealEstateDao {
     
     @Transaction
     @Query("SELECT * FROM RealEstateRequest WHERE realEstateId = :id")
-    suspend fun getRealEstate(id: Long): RealEstateMasterDetailResponse
+    fun getRealEstateMasterDetail(id: Long): Single<RealEstateMasterDetailResponse>
     
     @Transaction
     @Query("SELECT * FROM RealEstateRequest")

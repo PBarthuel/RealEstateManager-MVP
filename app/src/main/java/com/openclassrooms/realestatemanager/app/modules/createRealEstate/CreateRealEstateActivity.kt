@@ -78,6 +78,23 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                 .setChooserType(ChooserType.CAMERA_AND_GALLERY)
                 .build()
 
+            if (Utils.isInternetAvailable(this@CreateRealEstateActivity)) {
+                addressViewSwitcher.displayedChild = 0
+                addressEditText.setOnFocusChangeListener { _, hasFocus ->
+                    if (hasFocus) {
+                        Intent(applicationContext, AddressSearchActivity::class.java)
+                            .also { intent -> showAddressSearchResult.launch(intent) }
+                    }
+                }
+            } else {
+                addressViewSwitcher.displayedChild = 1
+                addressTextInputLayout.isVisible = false
+            }
+
+            photoButton.setClickWithDelay {
+                photoImagePicker.openChooser(this@CreateRealEstateActivity)
+            }
+
             submitButton.setClickWithDelay {
                 presenter.didSubmitRealEstate(
                     type = typeEditText.text.toString(),
@@ -93,24 +110,6 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                     bedroomNumber = bedroomNumberEditText.text.toString(),
                     bathroomNumber = bathroomNumberEditText.text.toString(),
                 )
-            }
-
-            if (Utils.isInternetAvailable(this@CreateRealEstateActivity)) {
-                addressViewSwitcher.displayedChild = 0
-                addressEditText.setOnFocusChangeListener { _, hasFocus ->
-                    if (hasFocus) {
-                        Intent(applicationContext, AddressSearchActivity::class.java)
-                            .also { intent -> showAddressSearchResult.launch(intent) }
-                    }
-                }
-            } else {
-                addressViewSwitcher.displayedChild = 1
-                addressTextInputLayout.isVisible = false
-            }
-
-            
-            photoButton.setClickWithDelay {
-                photoImagePicker.openChooser(this@CreateRealEstateActivity)
             }
         }
     }
@@ -153,6 +152,7 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     //region CreateRealEstateView callbacks
     override fun onDismissView() {
         Toast.makeText(this, "You have created a RealEstate, congratulations !!!", Toast.LENGTH_LONG).show()
+        setResult(Activity.RESULT_OK, intent)
         finish()
     }
     override fun onUpdateList(list: List<UIPhotoItem>) {

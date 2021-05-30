@@ -32,10 +32,10 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     override var view: CreateRealEstateView? = null
 
     var address: UIAddressItem = UIAddressItem(
-        "you need",
-        "to enable",
-        "your network connection",
         "and/or edit to put an address",
+        "to enable",
+        "you need",
+        "your network connection",
         0.0,
         0.0
     )

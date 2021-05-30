@@ -1,15 +1,14 @@
 package com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.realestatemanager.R
@@ -48,6 +47,15 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
 
         listener = context as RealEstateListFragmentListener
     }
+
+    //region ActivityResult
+    private val showCreateRealEstateResult: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.resultCode == Activity.RESULT_OK) {
+                presenter.setup()
+            }
+        }
+    //endregion
     
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -71,6 +79,8 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (detailFragmentLayout == null) {
             inflater.inflate(R.menu.drawer_list, menu)
+        } else {
+            inflater.inflate(R.menu.drawer_full, menu)
         }
     }
     
@@ -78,7 +88,23 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
         if (detailFragmentLayout == null) {
             when (item.itemId) {
                 R.id.menu_activity_creation -> {
-                    Intent(context, CreateRealEstateActivity::class.java).also { startActivity(it) }
+                    Intent(context, CreateRealEstateActivity::class.java).also {
+                        intent -> showCreateRealEstateResult.launch(intent)
+                    }
+                }
+                R.id.menu_activity_search -> {
+                    // TODO intent for future searchActivity
+                }
+            }
+        } else {
+            when (item.itemId) {
+                R.id.menu_activity_creation -> {
+                    Intent(context, CreateRealEstateActivity::class.java).also {
+                            intent -> showCreateRealEstateResult.launch(intent)
+                    }
+                }
+                R.id.menu_activity_modification -> {
+                    presenter.didSelectEdit()
                 }
                 R.id.menu_activity_search -> {
                     // TODO intent for future searchActivity
@@ -104,10 +130,17 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
     override fun onSetupRealEstates(list: List<UIRealEstateCondenseItem>) {
         adapter.submitList(list)
     }
+
+    override fun onShowEditActivity(id: Long) {
+        // TODO lancer l'intent de editActivity ici
+    }
+
+    override fun displayToast() { Toast.makeText(requireContext(), getString(R.string.real_estate_edit_warning), Toast.LENGTH_SHORT).show() }
     //endregion
 
     //region OnRealEstateClickListener Callback
     override fun onRealEstateClicked(item: UIRealEstateCondenseItem) {
+        presenter.setupId(item.id)
         listener?.didClickRealEstate(item.id)
     }
     //endregion

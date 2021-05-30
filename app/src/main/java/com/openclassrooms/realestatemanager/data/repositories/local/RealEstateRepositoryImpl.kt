@@ -9,10 +9,7 @@ import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateConden
 import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
 import com.openclassrooms.realestatemanager.domain.repositories.local.RealEstateRepository
 import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.core.SingleOnSubscribe
-import java.lang.Exception
 import javax.inject.Inject
-import kotlin.math.sin
 
 class RealEstateRepositoryImpl @Inject constructor(
     private val realEstateDao: RealEstateDao
@@ -74,7 +71,12 @@ class RealEstateRepositoryImpl @Inject constructor(
         }
 
     override fun getRealEstateCondense(): Single<List<DomainRealEstateCondense>> =
-                realEstateDao.getRealEstateCondense().map { realEstatesCondensesResponses ->
-                    realEstatesCondensesResponses.map { it.toDomain() }
-                }.throwDomainExceptionOnError()
+        realEstateDao.getRealEstateCondense().map { realEstatesCondensesResponses ->
+            realEstatesCondensesResponses.map { it.toDomain() }
+        }.throwDomainExceptionOnError()
+
+    override fun getRealEstateMasterDetail(id: Long): Single<DomainRealEstateMasterDetail> =
+        realEstateDao.getRealEstateMasterDetail(id)
+            .map{ it.toDomain() }
+            .throwDomainExceptionOnError()
 }

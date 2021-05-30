@@ -121,6 +121,7 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
         if(detailFragmentLayout == null) {
             displayedFragment(1)
         }
+        masterDetailFragment.presenter.setup(id)
     }
     //endregion
 }
