@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class UIAddressItem(
+    val id: Long,
     val country: String?,
     val city: String?,
     val road: String,

@@ -18,5 +18,5 @@ data class PhotoRequest(
     val roomType: String?
 ) : DomainModelConvertible<DomainPhoto> {
     override fun toDomain(): DomainPhoto =
-        DomainPhoto(photoReference, roomType)
+        DomainPhoto(photoId, photoReference, roomType)
 }

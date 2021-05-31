@@ -13,6 +13,7 @@ import androidx.core.view.isVisible
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.addressSearch.AddressSearchActivity
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.OnPhotoClickListener
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.app.ui.popups.AddingPhotoPopUpDialogFragment
@@ -101,6 +102,25 @@ class EditRealEstateActivity: AppCompatActivity(), EditRealEstateView, OnPhotoCl
             photoButton.setClickWithDelay {
                 photoImagePicker.openChooser(this@EditRealEstateActivity)
             }
+
+            submitButton.text = getString(R.string.real_estate_edit_button)
+            submitButton.setClickWithDelay {
+                presenter.didSelectEdit(
+                    type = typeEditText.text.toString(),
+                    price = priceEditText.text.toString(),
+                    surface = surfaceEditText.text.toString(),
+                    description = descriptionEditText.text.toString(),
+                    agent = agentEditText.text.toString(),
+                    commerce = commerceSwitch.isChecked,
+                    parc = parcSwitch.isChecked,
+                    trainStation = trainStationSwitch.isChecked,
+                    school = schoolSwitch.isChecked,
+                    totalRoomNumber = totalRoomNumberEditText.text.toString(),
+                    bedRoomNumber = bedroomNumberEditText.text.toString(),
+                    bathRoomNumber = bathroomNumberEditText.text.toString(),
+                    isSold = soldSwitch.isChecked
+                )
+            }
         }
     }
 
@@ -140,6 +160,12 @@ class EditRealEstateActivity: AppCompatActivity(), EditRealEstateView, OnPhotoCl
     private fun setupAdapter() {
         binding.recyclerView.adapter = adapter
         adapter.onPhotoClickListener = this
+    }
+
+    override fun onDismissView() {
+        Toast.makeText(this, "You have edit your RealEstate, congratulations !!!", Toast.LENGTH_LONG).show()
+        setResult(MainActivity.RESULT_EDIT, intent)
+        finish()
     }
 
     //region EditRealEstateView CallBack

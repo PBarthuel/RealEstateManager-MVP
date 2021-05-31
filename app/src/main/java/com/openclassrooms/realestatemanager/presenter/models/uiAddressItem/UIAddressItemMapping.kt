@@ -3,4 +3,4 @@ package com.openclassrooms.realestatemanager.presenter.models.uiAddressItem
 import com.openclassrooms.realestatemanager.domain.models.DomainAddress
 
 fun DomainAddress.toUIItem() =
-    UIAddressItem(country, city, road, postalCode, latitude, longitude)
+    UIAddressItem(id, country, city, road, postalCode, latitude, longitude)

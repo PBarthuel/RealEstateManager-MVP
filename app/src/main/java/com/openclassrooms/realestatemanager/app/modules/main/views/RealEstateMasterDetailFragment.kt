@@ -1,32 +1,29 @@
 package com.openclassrooms.realestatemanager.app.modules.main.views
 
-import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
-import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
 import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealEstateActivity
 import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
-import com.openclassrooms.realestatemanager.presenter.modules.main.MainPresenter
 import com.openclassrooms.realestatemanager.presenter.modules.main.views.RealEstateMasterDetailPresenter
 import com.openclassrooms.realestatemanager.presenter.modules.main.views.RealEstateMasterDetailView
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+
+interface RealEstateMasterDetailFragmentListener {
+    fun didReturnFromEditMasterDetail()
+}
 
 @AndroidEntryPoint
 class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
@@ -42,11 +39,20 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
 
     private var detailFragmentLayout: FrameLayout? = null
 
+    private var listener: RealEstateMasterDetailFragmentListener? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+
+        listener = context as RealEstateMasterDetailFragmentListener
+    }
+
     //region ActivityResult
     private val showEditRealEstateResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if(result.resultCode == MainActivity.RESULT_EDIT) {
                 presenter.updateMasterDetail()
+                listener?.didReturnFromEditMasterDetail()
             }
         }
     //endregion

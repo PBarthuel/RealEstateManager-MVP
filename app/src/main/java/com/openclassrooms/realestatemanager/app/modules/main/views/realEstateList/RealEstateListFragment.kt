@@ -25,7 +25,7 @@ import javax.inject.Inject
 
 interface RealEstateListFragmentListener {
     fun didClickRealEstate(id: Long)
-    fun didReturnFromEdit()
+    fun didReturnFromEditList()
 }
 
 @AndroidEntryPoint
@@ -55,7 +55,7 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when(result.resultCode) {
                 MainActivity.RESULT_CREATE -> presenter.setup()
-                MainActivity.RESULT_EDIT -> listener?.didReturnFromEdit()
+                MainActivity.RESULT_EDIT -> listener?.didReturnFromEditList()
             }
         }
     //endregion

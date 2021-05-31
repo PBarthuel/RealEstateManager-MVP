@@ -27,6 +27,7 @@ data class AddressRequest (
 ) : DomainModelConvertible<DomainAddress> {
     override fun toDomain(): DomainAddress =
         DomainAddress(
+            addressId,
             country,
             city,
             road,
