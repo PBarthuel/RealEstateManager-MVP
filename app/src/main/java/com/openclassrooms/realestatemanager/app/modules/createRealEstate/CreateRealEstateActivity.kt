@@ -12,6 +12,7 @@ import androidx.core.net.toFile
 import androidx.core.view.isVisible
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.addressSearch.AddressSearchActivity
+import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.OnPhotoClickListener
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.app.ui.popups.AddingPhotoPopUpDialogFragment
@@ -152,9 +153,10 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     //region CreateRealEstateView callbacks
     override fun onDismissView() {
         Toast.makeText(this, "You have created a RealEstate, congratulations !!!", Toast.LENGTH_LONG).show()
-        setResult(Activity.RESULT_OK, intent)
+        setResult(MainActivity.RESULT_CREATE, intent)
         finish()
     }
+
     override fun onUpdateList(list: List<UIPhotoItem>) {
         adapter.notifyDataSetChanged()
         adapter.submitList(list)

@@ -17,6 +17,7 @@ interface RealEstateMasterDetailView {
 interface RealEstateMasterDetailPresenter : DisposablePresenter<RealEstateMasterDetailView> {
     fun setup(id: Long)
     fun didSelectEdit()
+    fun updateMasterDetail()
 }
 
 class RealEstateMasterDetailPresenterImpl @Inject constructor(
@@ -51,5 +52,17 @@ class RealEstateMasterDetailPresenterImpl @Inject constructor(
             val id = id ?: return
             view?.onShowEditActivity(id)
         }
+    }
+
+    override fun updateMasterDetail() {
+        val id = id ?: return
+
+        disposeBag += getRealEstateMasterDetail.invoke(id)
+            .map { it.toUIMasterDetailItem() }
+            .subscribeOn(networkSchedulers.io)
+            .observeOn(networkSchedulers.main)
+            .subscribe({
+                view?.onSetupMasterDetail(it)
+            }, { })
     }
 }

@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.app.modules.main.views
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,9 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
@@ -36,6 +41,15 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
     private val binding get() = _binding!!
 
     private var detailFragmentLayout: FrameLayout? = null
+
+    //region ActivityResult
+    private val showEditRealEstateResult: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if(result.resultCode == MainActivity.RESULT_EDIT) {
+                presenter.updateMasterDetail()
+            }
+        }
+    //endregion
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         super.onCreateView(inflater, container, savedInstanceState)
@@ -99,7 +113,9 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
     }
 
     override fun onShowEditActivity(id: Long) {
-        // TODO lancer l'intent de editActivity ici
+        Intent(requireContext(), EditRealEstateActivity::class.java)
+            .apply { putExtra(EditRealEstateActivity.INTENT_REAL_ESTATE_ID_DATA, id) }
+            .also { intent -> showEditRealEstateResult.launch(intent) }
     }
 
     override fun displayToast() { Toast.makeText(requireContext(), getString(R.string.real_estate_edit_warning), Toast.LENGTH_SHORT).show() }
