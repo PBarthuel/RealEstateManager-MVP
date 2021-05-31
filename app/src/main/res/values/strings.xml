@@ -51,6 +51,7 @@
     <string name="error_incorrect_price">Price is incorrect</string>
 
     <string name="real_estate_edit_warning">You must select a detail first !</string>
+    <string name="real_estate_edit_button">Edit</string>
 
     <string name="address_search_address">Address</string>
     <string name="address_search_more_info_text">Hmmm, I need more info to find…</string>

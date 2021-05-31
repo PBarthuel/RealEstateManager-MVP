@@ -32,6 +32,7 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     override var view: CreateRealEstateView? = null
 
     var address: UIAddressItem = UIAddressItem(
+        0,
         "and/or edit to put an address",
         "to enable",
         "you need",
@@ -91,7 +92,7 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     }
     
     override fun didAddPhoto(photoName: String, base64ImageData: String) {
-        photos.add(UIPhotoItem(base64ImageData, photoName))
+        photos.add(UIPhotoItem(0, base64ImageData, photoName))
         view?.onUpdateList(photos)
     }
 

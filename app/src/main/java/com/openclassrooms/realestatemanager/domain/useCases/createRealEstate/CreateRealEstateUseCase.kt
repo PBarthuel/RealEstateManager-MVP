@@ -46,6 +46,7 @@ class CreateRealEstateUseCase @Inject constructor(
                             bedroomNumber = bedroomNumber,
                             bathroomNumber = bathroomNumber,
                             address = DomainAddress(
+                                0,
                                 country = address.country,
                                 city = address.city,
                                 road = address.road,
@@ -55,6 +56,7 @@ class CreateRealEstateUseCase @Inject constructor(
                             ),
                             photos = photos.map { photo ->
                                 DomainPhoto(
+                                    0,
                                     photoReference = photo.photoReference,
                                     roomType = photo.roomType
                                 )

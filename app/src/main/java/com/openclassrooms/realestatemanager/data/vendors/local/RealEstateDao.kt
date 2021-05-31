@@ -34,14 +34,11 @@ interface RealEstateDao {
     fun createPhoto(photosRequest: List<PhotoRequest>)
     
     @Update
-    suspend fun updateRealEstate(realEstateRequest: RealEstateRequest)
+    fun updateRealEstate(realEstateRequest: RealEstateRequest)
     
     @Update
     fun updateAddress(addressRequest: AddressRequest)
     
-    @Update
-    fun updatePhoto(photoRequest: PhotoRequest)
-    
     @Delete
-    fun deleteRealEstate(realEstateRequest: RealEstateRequest)
+    fun deletePhoto(photoRequest: PhotoRequest)
 }

@@ -11,6 +11,7 @@ import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragment
+import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragmentListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
 import com.openclassrooms.realestatemanager.app.utils.showAppSettings
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListener, PermissionErrorProtocol {
+class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListener, RealEstateMasterDetailFragmentListener, PermissionErrorProtocol {
 
     @Inject
     lateinit var presenter: MainPresenter
@@ -124,8 +125,17 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
         masterDetailFragment.presenter.setup(id)
     }
 
-    override fun didReturnFromEdit() {
+    override fun didReturnFromEditList() {
         masterDetailFragment.presenter.updateMasterDetail()
+    }
+    //endregion
+
+    //regionRealEstateMasterDetailFragmentListener Callback
+    override fun didReturnFromEditMasterDetail() {
+        if(detailFragmentLayout == null) {
+            displayedFragment(0)
+        }
+        listFragment.presenter.setup()
     }
     //endregion
 
