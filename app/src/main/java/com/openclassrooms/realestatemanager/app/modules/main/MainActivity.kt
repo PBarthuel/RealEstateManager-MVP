@@ -123,5 +123,14 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
         }
         masterDetailFragment.presenter.setup(id)
     }
+
+    override fun didReturnFromEdit() {
+        masterDetailFragment.presenter.updateMasterDetail()
+    }
     //endregion
+
+    companion object {
+        const val RESULT_CREATE = 100
+        const val RESULT_EDIT = 101
+    }
 }

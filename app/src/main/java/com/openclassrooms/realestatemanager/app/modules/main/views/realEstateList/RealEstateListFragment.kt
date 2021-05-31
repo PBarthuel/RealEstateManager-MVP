@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -13,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.createRealEstate.CreateRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.OnRealEstateClickListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.RealEstateListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateListBinding
@@ -24,6 +25,7 @@ import javax.inject.Inject
 
 interface RealEstateListFragmentListener {
     fun didClickRealEstate(id: Long)
+    fun didReturnFromEdit()
 }
 
 @AndroidEntryPoint
@@ -49,10 +51,11 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
     }
 
     //region ActivityResult
-    private val showCreateRealEstateResult: ActivityResultLauncher<Intent> =
+    private val showCreateOrEditRealEstateResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.resultCode == Activity.RESULT_OK) {
-                presenter.setup()
+            when(result.resultCode) {
+                MainActivity.RESULT_CREATE -> presenter.setup()
+                MainActivity.RESULT_EDIT -> listener?.didReturnFromEdit()
             }
         }
     //endregion
@@ -89,7 +92,7 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
             when (item.itemId) {
                 R.id.menu_activity_creation -> {
                     Intent(context, CreateRealEstateActivity::class.java).also {
-                        intent -> showCreateRealEstateResult.launch(intent)
+                        intent -> showCreateOrEditRealEstateResult.launch(intent)
                     }
                 }
                 R.id.menu_activity_search -> {
@@ -100,7 +103,7 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
             when (item.itemId) {
                 R.id.menu_activity_creation -> {
                     Intent(context, CreateRealEstateActivity::class.java).also {
-                            intent -> showCreateRealEstateResult.launch(intent)
+                            intent -> showCreateOrEditRealEstateResult.launch(intent)
                     }
                 }
                 R.id.menu_activity_modification -> {
@@ -132,7 +135,9 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
     }
 
     override fun onShowEditActivity(id: Long) {
-        // TODO lancer l'intent de editActivity ici
+        Intent(requireContext(), EditRealEstateActivity::class.java)
+            .apply { putExtra(EditRealEstateActivity.INTENT_REAL_ESTATE_ID_DATA, id) }
+            .also { intent -> showCreateOrEditRealEstateResult.launch(intent) }
     }
 
     override fun displayToast() { Toast.makeText(requireContext(), getString(R.string.real_estate_edit_warning), Toast.LENGTH_SHORT).show() }
