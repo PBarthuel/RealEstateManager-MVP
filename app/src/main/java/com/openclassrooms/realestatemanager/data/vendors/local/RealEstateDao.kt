@@ -22,6 +22,10 @@ interface RealEstateDao {
     
     @Transaction
     @Query("SELECT * FROM RealEstateRequest")
+    fun getAllRealEstateMasterDetail(): Single<List<RealEstateMasterDetailResponse>>
+    
+    @Transaction
+    @Query("SELECT * FROM RealEstateRequest")
     fun getRealEstateCondense(): Single<List<RealEstateCondenseResponse>>
     
     @Insert

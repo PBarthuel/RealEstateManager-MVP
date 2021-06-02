@@ -78,6 +78,11 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
         setupUI()
         presenter.setup()
     }
+    
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (detailFragmentLayout == null) {

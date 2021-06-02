@@ -45,6 +45,11 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
         presenter.setup()
     }
     
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
+    
     private fun setupToolBarAndMenuDrawer() {
         val toolbar = findViewById<Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)

@@ -53,6 +53,11 @@ class AddressSearchActivity: AppCompatActivity(), AddressSearchView, OnAddressCl
         setupAdapter()
         setupUI()
     }
+    
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
 
     private fun setupUI() {
         queryInputSubject

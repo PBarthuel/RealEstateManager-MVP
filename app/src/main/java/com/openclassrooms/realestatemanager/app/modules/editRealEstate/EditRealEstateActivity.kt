@@ -71,6 +71,11 @@ class EditRealEstateActivity: AppCompatActivity(), EditRealEstateView, OnPhotoCl
         setupAdapter()
         setupUI()
     }
+    
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)

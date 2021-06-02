@@ -10,5 +10,6 @@ interface RealEstateRepository {
     fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail): Single<Unit>
     fun getRealEstateCondense(): Single<List<DomainRealEstateCondense>>
     fun getRealEstateMasterDetail(id: Long): Single<DomainRealEstateMasterDetail>
+    fun getAllRealEstateMasterDetail(): Single<List<DomainRealEstateMasterDetail>>
     fun editRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail, photosToDelete: List<DomainPhoto>): Completable
 }

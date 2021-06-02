@@ -1,6 +1,5 @@
 package com.openclassrooms.realestatemanager.data.repositories.local
 
-import com.openclassrooms.realestatemanager.app.utils.Utils
 import com.openclassrooms.realestatemanager.data.utils.throwDomainExceptionOnError
 import com.openclassrooms.realestatemanager.data.vendors.local.RealEstateDao
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.AddressRequest
@@ -82,7 +81,12 @@ class RealEstateRepositoryImpl @Inject constructor(
         realEstateDao.getRealEstateMasterDetail(id)
             .map{ it.toDomain() }
             .throwDomainExceptionOnError()
-
+    
+    override fun getAllRealEstateMasterDetail(): Single<List<DomainRealEstateMasterDetail>> =
+            realEstateDao.getAllRealEstateMasterDetail().map { realEstatesMastersDetailsResponses ->
+                realEstatesMastersDetailsResponses.map { it.toDomain() }
+            }.throwDomainExceptionOnError()
+    
     override fun editRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail, photosToDelete: List<DomainPhoto>): Completable =
         Completable.create { completable ->
             try {
