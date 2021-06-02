@@ -71,6 +71,11 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         setupUI()
     }
+    
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         if (detailFragmentLayout == null) {

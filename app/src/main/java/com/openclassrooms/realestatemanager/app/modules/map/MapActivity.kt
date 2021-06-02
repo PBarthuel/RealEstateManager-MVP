@@ -3,16 +3,29 @@ package com.openclassrooms.realestatemanager.app.modules.map
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.databinding.ActivityMapBinding
+import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
+import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
+import com.openclassrooms.realestatemanager.presenter.modules.map.MapPresenter
+import com.openclassrooms.realestatemanager.presenter.modules.map.MapView
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class MapActivity: AppCompatActivity(), OnMapReadyCallback {
+class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
+    
+    @Inject
+    lateinit var presenter: MapPresenter
     
     private val binding by activityViewBinding(ActivityMapBinding::inflate)
     
@@ -21,12 +34,18 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        
+        presenter.attach(this)
     }
     
     override fun onResume() {
         super.onResume()
         setupMap()
+        presenter.setupMapMarker()
+    }
+    
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
     }
     
     private fun setupMap() {
@@ -42,7 +61,38 @@ class MapActivity: AppCompatActivity(), OnMapReadyCallback {
             setMaxZoomPreference(16.5F)
             uiSettings.isRotateGesturesEnabled = false
             uiSettings.isMyLocationButtonEnabled = true
-            isMyLocationEnabled = true
+        }
+        presenter.setup()
+    }
+    
+    //region MapView Callback
+    override fun onSetupMapMarker(list: List<UIRealEstateMasterDetailItem>) {
+        list.forEach { uiRealEstateMasterDetailItem ->
+            if (uiRealEstateMasterDetailItem.address.latitude != 0.0 && uiRealEstateMasterDetailItem.address.longitude != 0.0) {
+                googleMap?.addMarker(
+                    MarkerOptions().position(
+                        LatLng(
+                            uiRealEstateMasterDetailItem.address.latitude,
+                            uiRealEstateMasterDetailItem.address.longitude
+                        )
+                    ).icon(BitmapDescriptorFactory.defaultMarker())
+                        .title(uiRealEstateMasterDetailItem.type)
+                )
+            }
         }
     }
+    
+    override fun onShowUserPosition(item: UIAddressItem) {
+        with(item) {
+            LatLngBounds.builder().include(LatLng(latitude, longitude)).build().also {
+                googleMap?.animateCamera(CameraUpdateFactory.newLatLngBounds(it, 1))
+            }
+        }
+    }
+    
+    @SuppressLint("MissingPermission")
+    override fun onEnableUserPosition() {
+        googleMap?.isMyLocationEnabled = true
+    }
+    //endregion
 }

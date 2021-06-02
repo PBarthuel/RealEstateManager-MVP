@@ -67,6 +67,11 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
         setupUI()
     }
     
+    override fun onDestroy() {
+        presenter.destroy()
+        super.onDestroy()
+    }
+    
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         handlePhotoImagePickerActivityResult(requestCode, resultCode, data)
