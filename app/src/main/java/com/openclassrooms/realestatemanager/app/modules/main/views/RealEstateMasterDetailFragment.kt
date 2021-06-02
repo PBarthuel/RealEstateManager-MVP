@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealEstateActivity
 import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
@@ -131,5 +132,7 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
     }
 
     override fun displayToast() { Toast.makeText(requireContext(), getString(R.string.real_estate_edit_warning), Toast.LENGTH_SHORT).show() }
+    override fun onShowStaticMap(url: String) {
+        Glide.with(binding.staticMapImageView).load(url).into(binding.staticMapImageView) }
     //endregion
 }

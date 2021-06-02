@@ -39,8 +39,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/mediaTitleTextView" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -308,6 +308,16 @@
                     app:layout_constraintTop_toBottomOf="@id/bedroomNumberTitleTextView"
                     tools:text="4" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/staticMapImageView"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:contentDescription="@null"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/bedroomNumberConstraintLayout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.presenter.modules.main.views
 
 import com.openclassrooms.realestatemanager.domain.useCases.main.GetRealEstateMasterDetailUseCase
+import com.openclassrooms.realestatemanager.domain.useCases.main.GetStaticMapImageUrlUseCase
 import com.openclassrooms.realestatemanager.presenter.models.toUIMasterDetailItem
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
 import com.openclassrooms.realestatemanager.presenter.protocols.DisposablePresenter
@@ -12,6 +13,7 @@ interface RealEstateMasterDetailView {
     fun onSetupMasterDetail(item: UIRealEstateMasterDetailItem)
     fun onShowEditActivity(id: Long)
     fun displayToast()
+    fun onShowStaticMap(url: String)
 }
 
 interface RealEstateMasterDetailPresenter : DisposablePresenter<RealEstateMasterDetailView> {
@@ -22,6 +24,7 @@ interface RealEstateMasterDetailPresenter : DisposablePresenter<RealEstateMaster
 
 class RealEstateMasterDetailPresenterImpl @Inject constructor(
     private val getRealEstateMasterDetail: GetRealEstateMasterDetailUseCase,
+    private val getStaticMapImageUrl: GetStaticMapImageUrlUseCase,
     private val networkSchedulers: NetworkSchedulers
 ) : RealEstateMasterDetailPresenter {
 
@@ -42,6 +45,7 @@ class RealEstateMasterDetailPresenterImpl @Inject constructor(
             .observeOn(networkSchedulers.main)
             .subscribe({
                 view?.onSetupMasterDetail(it)
+                view?.onShowStaticMap(getStaticMapImageUrl.invoke(it.address.latitude, it.address.longitude) )
             }, { })
     }
 

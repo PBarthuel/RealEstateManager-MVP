@@ -9,7 +9,7 @@ fun Date.getFormatWithoutTime(context: Context?): String =
         context,
         this.time,
         DateUtils.FORMAT_SHOW_DATE
-                or DateUtils.FORMAT_SHOW_WEEKDAY
-                or DateUtils.FORMAT_ABBREV_WEEKDAY
-                or DateUtils.FORMAT_ABBREV_MONTH
+            or DateUtils.FORMAT_SHOW_WEEKDAY
+            or DateUtils.FORMAT_ABBREV_WEEKDAY
+            or DateUtils.FORMAT_ABBREV_MONTH
     ).capitalize(Locale.getDefault())
