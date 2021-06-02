@@ -1,5 +1,7 @@
 package com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.viewHolder
 
+import android.graphics.BitmapFactory
+import android.util.Base64
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -22,7 +24,13 @@ class RealEstateListViewHolder(
             }
             priceTextView.text = item.price
             //TODO temporaire getDrawable
-            thumbnailImageView.setImageDrawable(root.context.getDrawable(R.drawable.img_empty_house))
+            when(item.photo) {
+                "" -> thumbnailImageView.setImageDrawable(root.context.getDrawable(R.drawable.img_empty_house))
+                else -> {
+                    val decodedString = Base64.decode(item.photo, Base64.DEFAULT)
+                    BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)?.let { thumbnailImageView.setImageBitmap(it) }
+                }
+            }
             soldImageView.isVisible = item.isSold
             listConstraintLayout.setOnClickListener {
                 onRealEstateClickListener?.onRealEstateClicked(item)
