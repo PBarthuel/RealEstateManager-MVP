@@ -16,6 +16,7 @@ import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealE
 import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.OnRealEstateClickListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.adapter.RealEstateListAdapter
+import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateListBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateCondenseItem.UIRealEstateCondenseItem
 import com.openclassrooms.realestatemanager.presenter.modules.main.views.realEstateList.RealEstateListPresenter
@@ -101,7 +102,8 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
                     }
                 }
                 R.id.menu_activity_search -> {
-                    // TODO intent for future searchActivity
+                    Intent(requireContext(), SearchRealEstateActivity::class.java)
+                            .also { intent -> startActivity(intent) }
                 }
             }
         } else {
@@ -115,7 +117,8 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
                     presenter.didSelectEdit()
                 }
                 R.id.menu_activity_search -> {
-                    // TODO intent for future searchActivity
+                    Intent(requireContext(), SearchRealEstateActivity::class.java)
+                            .also { intent -> startActivity(intent) }
                 }
             }
         }

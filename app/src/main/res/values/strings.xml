@@ -59,4 +59,13 @@
 
     <string name="geolocation_popup_title">You must enable your location to have the full experience of the app !</string>
     <string name="geolocation_popup_enable_button">Enable</string>
+
+    <string name="search_min_surface">Min surface</string>
+    <string name="search_max_surface">Max surface</string>
+    <string name="search_min_price">Min price</string>
+    <string name="search_max_price">Max price</string>
+    <string name="search_min_photo_number">Minimum photo number</string>
+    <string name="search_sold">Sold</string>
+    <string name="search_validation">Validate search</string>
+    <string name="search_city">City</string>
 </resources>

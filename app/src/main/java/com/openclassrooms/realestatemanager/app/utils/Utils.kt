@@ -24,6 +24,16 @@ object Utils {
     }
     
     /**
+     * Conversion d'un prix d'un bien immobilier (Euros vers Dollars)
+     * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
+     * @param euros
+     * @return
+     */
+    fun convertEuroToDollar(euros: Int): Int {
+        return (euros * 1.22).roundToInt()
+    }
+    
+    /**
      * Conversion de la date d'aujourd'hui en un format plus approprié
      * NOTE : NE PAS SUPPRIMER, A MONTRER DURANT LA SOUTENANCE
      * @return
