@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.app.modules.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
@@ -13,6 +14,7 @@ import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateLis
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragmentListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
+import com.openclassrooms.realestatemanager.app.modules.map.MapActivity
 import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
 import com.openclassrooms.realestatemanager.app.utils.showAppSettings
 import com.openclassrooms.realestatemanager.presenter.modules.main.MainPresenter
@@ -66,7 +68,8 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                         displayedFragment(0)
                     }
                     if (menuItem.itemId == R.id.navRealEstateMap) {
-                        displayedFragment(1)
+                        Intent(this, MapActivity::class.java)
+                                .also { intent -> startActivity(intent) }
                     }
                     false
                 }
