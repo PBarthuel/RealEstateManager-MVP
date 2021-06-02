@@ -5,5 +5,6 @@ data class UIRealEstateCondenseItem(
     val type: String,
     val city: String?,
     val price: String,
-    val isSold: Boolean
+    val isSold: Boolean,
+    val photo: String
 )

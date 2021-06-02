@@ -19,20 +19,24 @@ data class RealEstateCondenseResponse(
     val address: AddressRequest,
     @Relation(
         parentColumn = "realEstateId",
-        entityColumn = "photoId"
+        entityColumn = "realEstateOwnerId"
     )
     val photo: List<PhotoRequest>
 ) : DomainModelConvertible<DomainRealEstateCondense> {
-    override fun toDomain(): DomainRealEstateCondense =
+    override fun toDomain(): DomainRealEstateCondense {
         with(realEstate) {
-            DomainRealEstateCondense(
-                    realEstateId,
-                    type,
-                    address.city,
-                    price,
-                    isSold,
-                ""
-                    //photo[0].photoReference
+            val headerPhoto = when(photo.isNullOrEmpty()) {
+                true -> ""
+                false -> photo[0].photoReference
+            }
+            return DomainRealEstateCondense(
+                realEstateId,
+                type,
+                address.city,
+                price,
+                isSold,
+                headerPhoto
             )
         }
+    }
 }

@@ -13,7 +13,8 @@ fun DomainRealEstateCondense.toUICondenseItem(): UIRealEstateCondenseItem =
         type,
         city,
         price,
-        isSold
+        isSold,
+        photo
     )
 
 fun DomainRealEstateMasterDetail.toUIMasterDetailItem(): UIRealEstateMasterDetailItem =
