@@ -34,11 +34,12 @@
             android:name=".app.modules.editRealEstate.EditRealEstateActivity"/>
         <activity
             android:name=".app.modules.map.MapActivity"/>
+        <activity
+            android:name=".app.modules.searchRealEstate.SearchRealEstateActivity"/>
 
         <!-- UCrop -->
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- GOOGLE MAP -->

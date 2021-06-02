@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealEstateActivity
 import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
-import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
+import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
@@ -90,7 +90,8 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
                     presenter.didSelectEdit()
                 }
                 R.id.menu_activity_search -> {
-                    // TODO intent for future searchActivity
+                    Intent(requireContext(), SearchRealEstateActivity::class.java)
+                            .also { intent -> startActivity(intent) }
                 }
             }
         }
