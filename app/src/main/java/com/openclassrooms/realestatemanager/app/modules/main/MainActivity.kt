@@ -136,7 +136,13 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     override fun didReturnFromEditList() {
         masterDetailFragment.presenter.updateMasterDetail()
     }
-    //endregion
+    
+    override fun didReturnFromSearchRealEstate(id: Long) {
+        if(detailFragmentLayout == null) {
+            displayedFragment(1)
+        }
+        masterDetailFragment.presenter.setup(id)
+    } //endregion
 
     //regionRealEstateMasterDetailFragmentListener Callback
     override fun didReturnFromEditMasterDetail() {
@@ -150,5 +156,6 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     companion object {
         const val RESULT_CREATE = 100
         const val RESULT_EDIT = 101
+        const val RESULT_SEARCH = 102
     }
 }

@@ -27,6 +27,7 @@ import javax.inject.Inject
 interface RealEstateListFragmentListener {
     fun didClickRealEstate(id: Long)
     fun didReturnFromEditList()
+    fun didReturnFromSearchRealEstate(id: Long)
 }
 
 @AndroidEntryPoint
@@ -52,11 +53,15 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
     }
 
     //region ActivityResult
-    private val showCreateOrEditRealEstateResult: ActivityResultLauncher<Intent> =
+    private val showCreateOrEditorSearchRealEstateResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             when(result.resultCode) {
                 MainActivity.RESULT_CREATE -> presenter.setup()
                 MainActivity.RESULT_EDIT -> listener?.didReturnFromEditList()
+                MainActivity.RESULT_SEARCH -> {
+                    result.data?.getLongExtra(SearchRealEstateActivity.INTENT_ADDRESS_ITEM_DATA, 0)
+                            ?.let { id -> listener?.didReturnFromSearchRealEstate(id) }
+                }
             }
         }
     //endregion
@@ -98,19 +103,19 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
             when (item.itemId) {
                 R.id.menu_activity_creation -> {
                     Intent(context, CreateRealEstateActivity::class.java).also {
-                        intent -> showCreateOrEditRealEstateResult.launch(intent)
+                        intent -> showCreateOrEditorSearchRealEstateResult.launch(intent)
                     }
                 }
                 R.id.menu_activity_search -> {
                     Intent(requireContext(), SearchRealEstateActivity::class.java)
-                            .also { intent -> startActivity(intent) }
+                            .also { intent -> showCreateOrEditorSearchRealEstateResult.launch(intent) }
                 }
             }
         } else {
             when (item.itemId) {
                 R.id.menu_activity_creation -> {
                     Intent(context, CreateRealEstateActivity::class.java).also {
-                            intent -> showCreateOrEditRealEstateResult.launch(intent)
+                            intent -> showCreateOrEditorSearchRealEstateResult.launch(intent)
                     }
                 }
                 R.id.menu_activity_modification -> {
@@ -118,7 +123,7 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
                 }
                 R.id.menu_activity_search -> {
                     Intent(requireContext(), SearchRealEstateActivity::class.java)
-                            .also { intent -> startActivity(intent) }
+                            .also { intent -> showCreateOrEditorSearchRealEstateResult.launch(intent) }
                 }
             }
         }
@@ -145,7 +150,7 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
     override fun onShowEditActivity(id: Long) {
         Intent(requireContext(), EditRealEstateActivity::class.java)
             .apply { putExtra(EditRealEstateActivity.INTENT_REAL_ESTATE_ID_DATA, id) }
-            .also { intent -> showCreateOrEditRealEstateResult.launch(intent) }
+            .also { intent -> showCreateOrEditorSearchRealEstateResult.launch(intent) }
     }
 
     override fun displayToast() { Toast.makeText(requireContext(), getString(R.string.real_estate_edit_warning), Toast.LENGTH_SHORT).show() }

@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.app.utils.viewExtension
 
 import android.content.Context
 import android.text.format.DateUtils
+import java.text.SimpleDateFormat
 import java.util.*
 
 fun Date.getFormatWithoutTime(context: Context?): String =
@@ -13,3 +14,9 @@ fun Date.getFormatWithoutTime(context: Context?): String =
             or DateUtils.FORMAT_ABBREV_WEEKDAY
             or DateUtils.FORMAT_ABBREV_MONTH
     ).capitalize(Locale.getDefault())
+
+fun String.toDate(): Date? = try {
+    SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(this)
+} catch (exception: Exception) {
+    null
+}
