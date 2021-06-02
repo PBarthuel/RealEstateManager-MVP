@@ -32,6 +32,8 @@
             android:name=".app.modules.addressSearch.AddressSearchActivity"/>
         <activity
             android:name=".app.modules.editRealEstate.EditRealEstateActivity"/>
+        <activity
+            android:name=".app.modules.map.MapActivity"/>
 
         <!-- UCrop -->
         <activity
