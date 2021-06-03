@@ -59,8 +59,11 @@ class RealEstateListFragment : Fragment(), RealEstateListView, OnRealEstateClick
                 MainActivity.RESULT_CREATE -> presenter.setup()
                 MainActivity.RESULT_EDIT -> listener?.didReturnFromEditList()
                 MainActivity.RESULT_SEARCH -> {
-                    result.data?.getLongExtra(SearchRealEstateActivity.INTENT_ADDRESS_ITEM_DATA, 0)
+                    result.data?.getLongExtra(SearchRealEstateActivity.INTENT_ID_ITEM_DATA, 0)
                             ?.let { id -> listener?.didReturnFromSearchRealEstate(id) }
+                }
+                MainActivity.RESULT_MAP -> {
+                
                 }
             }
         }

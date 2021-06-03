@@ -59,7 +59,7 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
                     listener?.didReturnFromEditMasterDetail()
                 }
                 MainActivity.RESULT_SEARCH -> {
-                    result.data?.getLongExtra(SearchRealEstateActivity.INTENT_ADDRESS_ITEM_DATA, 0)
+                    result.data?.getLongExtra(SearchRealEstateActivity.INTENT_ID_ITEM_DATA, 0)
                             ?.let { id -> presenter.setup(id) }
                 }
             }

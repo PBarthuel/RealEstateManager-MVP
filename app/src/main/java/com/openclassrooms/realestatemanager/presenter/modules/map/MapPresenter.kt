@@ -59,11 +59,11 @@ class MapPresenterImpl @Inject constructor(
     
     private fun showUserAddressOnMap() {
         getUserAddress.invoke()
-                .map { domainAddress -> domainAddress.toUIItem() }
-                .subscribeOn(networkSchedulers.io)
-                .observeOn(networkSchedulers.main)
-                .subscribe({
-                    view?.onShowUserPosition(it)
-                }, { })
+            .map { domainAddress -> domainAddress.toUIItem() }
+            .subscribeOn(networkSchedulers.io)
+            .observeOn(networkSchedulers.main)
+            .subscribe({
+                view?.onShowUserPosition(it)
+            }, { })
     }
 }

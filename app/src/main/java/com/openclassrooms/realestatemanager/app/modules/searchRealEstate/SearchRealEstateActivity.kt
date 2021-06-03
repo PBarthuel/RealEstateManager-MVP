@@ -163,7 +163,7 @@ class SearchRealEstateActivity: AppCompatActivity(), SearchRealEstateView, OnRea
     override fun onRealEstateClicked(item: UIRealEstateCondenseItem) {
         val result = MainActivity.RESULT_SEARCH
     
-        Intent().apply { putExtra(INTENT_ADDRESS_ITEM_DATA, item.id) }
+        Intent().apply { putExtra(INTENT_ID_ITEM_DATA, item.id) }
                 .also { intent ->
                     setResult(result, intent)
                     finish()
@@ -171,6 +171,6 @@ class SearchRealEstateActivity: AppCompatActivity(), SearchRealEstateView, OnRea
     }
     
     companion object {
-        const val INTENT_ADDRESS_ITEM_DATA = "intent_id_item_data"
+        const val INTENT_ID_ITEM_DATA = "intent_id_item_data"
     }
 }
