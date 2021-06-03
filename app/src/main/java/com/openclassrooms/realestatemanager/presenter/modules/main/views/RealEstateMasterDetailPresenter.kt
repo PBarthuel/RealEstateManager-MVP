@@ -45,7 +45,7 @@ class RealEstateMasterDetailPresenterImpl @Inject constructor(
             .observeOn(networkSchedulers.main)
             .subscribe({
                 view?.onSetupMasterDetail(it)
-                view?.onShowStaticMap(getStaticMapImageUrl.invoke(it.address.latitude, it.address.longitude) )
+                view?.onShowStaticMap(getStaticMapImageUrl.invoke(it.address.latitude, it.address.longitude))
             }, { })
     }
 

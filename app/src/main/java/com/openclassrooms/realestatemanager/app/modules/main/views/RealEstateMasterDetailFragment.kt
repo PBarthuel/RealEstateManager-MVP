@@ -11,11 +11,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.app.modules.addressSearch.AddressSearchActivity
 import com.openclassrooms.realestatemanager.app.modules.editRealEstate.EditRealEstateActivity
 import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
 import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
 import com.openclassrooms.realestatemanager.app.ui.photoList.adapter.PhotoListAdapter
 import com.openclassrooms.realestatemanager.databinding.FragmentRealEstateMasterDetailBinding
+import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
 import com.openclassrooms.realestatemanager.presenter.modules.main.views.RealEstateMasterDetailPresenter
 import com.openclassrooms.realestatemanager.presenter.modules.main.views.RealEstateMasterDetailView
@@ -49,11 +51,17 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
     }
 
     //region ActivityResult
-    private val showEditRealEstateResult: ActivityResultLauncher<Intent> =
+    private val showEditorSearchRealEstateResult: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if(result.resultCode == MainActivity.RESULT_EDIT) {
-                presenter.updateMasterDetail()
-                listener?.didReturnFromEditMasterDetail()
+            when(result.resultCode) {
+                MainActivity.RESULT_EDIT -> {
+                    presenter.updateMasterDetail()
+                    listener?.didReturnFromEditMasterDetail()
+                }
+                MainActivity.RESULT_SEARCH -> {
+                    result.data?.getLongExtra(SearchRealEstateActivity.INTENT_ID_ITEM_DATA, 0)
+                            ?.let { id -> presenter.setup(id) }
+                }
             }
         }
     //endregion
@@ -92,7 +100,7 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
                 }
                 R.id.menu_activity_search -> {
                     Intent(requireContext(), SearchRealEstateActivity::class.java)
-                            .also { intent -> startActivity(intent) }
+                        .also { intent -> showEditorSearchRealEstateResult.launch(intent) }
                 }
             }
         }
@@ -128,7 +136,7 @@ class RealEstateMasterDetailFragment : Fragment(), RealEstateMasterDetailView {
     override fun onShowEditActivity(id: Long) {
         Intent(requireContext(), EditRealEstateActivity::class.java)
             .apply { putExtra(EditRealEstateActivity.INTENT_REAL_ESTATE_ID_DATA, id) }
-            .also { intent -> showEditRealEstateResult.launch(intent) }
+            .also { intent -> showEditorSearchRealEstateResult.launch(intent) }
     }
 
     override fun displayToast() { Toast.makeText(requireContext(), getString(R.string.real_estate_edit_warning), Toast.LENGTH_SHORT).show() }

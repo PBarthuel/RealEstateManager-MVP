@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.FrameLayout
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -15,6 +17,7 @@ import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMas
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragmentListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.app.modules.map.MapActivity
+import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
 import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
 import com.openclassrooms.realestatemanager.app.utils.showAppSettings
 import com.openclassrooms.realestatemanager.presenter.modules.main.MainPresenter
@@ -33,6 +36,21 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     private val masterDetailFragment = RealEstateMasterDetailFragment()
     
     private var detailFragmentLayout: FrameLayout? = null
+    
+    //region ActivityResult
+    private val showMapRealEstateResult: ActivityResultLauncher<Intent> =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if(result.resultCode == RESULT_MAP) {
+                    result.data?.getLongExtra(MapActivity.INTENT_ID_ITEM_DATA, 0)
+                        ?.let { id ->
+                            if(detailFragmentLayout == null) {
+                                displayedFragment(1)
+                            }
+                            masterDetailFragment.presenter.setup(id)
+                        }
+                }
+            }
+    //endregion
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,8 +91,8 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                         displayedFragment(0)
                     }
                     if (menuItem.itemId == R.id.navRealEstateMap) {
-                        Intent(this, MapActivity::class.java)
-                                .also { intent -> startActivity(intent) }
+                        Intent(this@MainActivity, MapActivity::class.java)
+                                .also { intent -> showMapRealEstateResult.launch(intent) }
                     }
                     false
                 }
@@ -136,7 +154,13 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     override fun didReturnFromEditList() {
         masterDetailFragment.presenter.updateMasterDetail()
     }
-    //endregion
+    
+    override fun didReturnFromSearchRealEstate(id: Long) {
+        if(detailFragmentLayout == null) {
+            displayedFragment(1)
+        }
+        masterDetailFragment.presenter.setup(id)
+    } //endregion
 
     //regionRealEstateMasterDetailFragmentListener Callback
     override fun didReturnFromEditMasterDetail() {
@@ -150,5 +174,7 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     companion object {
         const val RESULT_CREATE = 100
         const val RESULT_EDIT = 101
+        const val RESULT_SEARCH = 102
+        const val RESULT_MAP = 103
     }
 }

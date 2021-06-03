@@ -10,7 +10,7 @@ class GetStaticMapImageUrlUseCase @Inject constructor() {
             appendQueryParameter("key", "AIzaSyDBqXB_lCpa8qS9ZLExBkDkehjCPDFYaOY")
             appendQueryParameter("center", "$latitude,$longitude")
             appendQueryParameter("zoom", "14")
-            appendQueryParameter("size", "128x128")
+            appendQueryParameter("size", "256x256")
         }.build().toString()
     }
 }

@@ -1,8 +1,12 @@
 package com.openclassrooms.realestatemanager.app.modules.map
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.collection.ArrayMap
+import androidx.collection.arrayMapOf
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -10,8 +14,11 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.LatLngBounds
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
+import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.databinding.ActivityMapBinding
 import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
@@ -67,9 +74,10 @@ class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
     
     //region MapView Callback
     override fun onSetupMapMarker(list: List<UIRealEstateMasterDetailItem>) {
+        val allMarkersMap: ArrayMap<Marker, UIRealEstateMasterDetailItem> = arrayMapOf()
         list.forEach { uiRealEstateMasterDetailItem ->
             if (uiRealEstateMasterDetailItem.address.latitude != 0.0 && uiRealEstateMasterDetailItem.address.longitude != 0.0) {
-                googleMap?.addMarker(
+                val marker: Marker? = googleMap?.addMarker(
                     MarkerOptions().position(
                         LatLng(
                             uiRealEstateMasterDetailItem.address.latitude,
@@ -78,7 +86,17 @@ class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
                     ).icon(BitmapDescriptorFactory.defaultMarker())
                         .title(uiRealEstateMasterDetailItem.type)
                 )
+                allMarkersMap[marker] = uiRealEstateMasterDetailItem
             }
+        }
+        googleMap?.setOnInfoWindowClickListener {
+            val result = MainActivity.RESULT_MAP
+    
+            Intent().apply { putExtra(SearchRealEstateActivity.INTENT_ID_ITEM_DATA, allMarkersMap[it]?.id) }
+                    .also { intent ->
+                        setResult(result, intent)
+                        finish()
+                    }
         }
     }
     
@@ -95,4 +113,8 @@ class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
         googleMap?.isMyLocationEnabled = true
     }
     //endregion
+    
+    companion object {
+        const val INTENT_ID_ITEM_DATA = "intent_id_item_data"
+    }
 }

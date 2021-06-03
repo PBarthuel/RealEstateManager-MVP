@@ -311,13 +311,24 @@
 
             <ImageView
                 android:id="@+id/staticMapImageView"
-                android:layout_width="128dp"
-                android:layout_height="128dp"
+                android:layout_width="256dp"
+                android:layout_height="256dp"
                 android:contentDescription="@null"
                 android:layout_marginTop="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bedroomNumberConstraintLayout" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_pin"
+                android:layout_marginBottom="8dp"
+                app:layout_constraintTop_toTopOf="@id/staticMapImageView"
+                app:layout_constraintBottom_toBottomOf="@id/staticMapImageView"
+                app:layout_constraintStart_toStartOf="@id/staticMapImageView"
+                app:layout_constraintEnd_toEndOf="@id/staticMapImageView"
+                android:contentDescription="@null" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

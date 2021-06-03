@@ -118,7 +118,7 @@ class AddressSearchActivity: AppCompatActivity(), AddressSearchView, OnAddressCl
 
     //endregion
 
-    //region OnPhotoClickListener callback
+    //region OnAddressClickListener callback
     override fun didSelectItem(item: UIAddressItem) {
         val result = CreateRealEstateActivity.RESULT_ADDRESS
 
