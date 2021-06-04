@@ -27,6 +27,7 @@ interface AddressSearchPresenter: DisposablePresenter<AddressSearchView> {
 class AddressSearchPresenterImpl @Inject constructor(
     private val getAddressesFromSearch: GetAddressesFromSearchUseCase,
     private val isGeolocationEnabled: IsGeolocationEnabledUseCase,
+    // TODO rajouter la demande de permission en arrivant sur la map et pourquoi pas le faire aussi avec l'address
     private val requestGeolocationPermission: RequestGeolocationPermissionUseCase,
     private val getUserAddress: GetUserAddressUseCase,
     private val networkSchedulers: NetworkSchedulers
