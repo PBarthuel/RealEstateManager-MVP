@@ -7,7 +7,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Single
 
 interface RealEstateRepository {
-    fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail): Single<Unit>
+    fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail): Completable
     fun getRealEstateCondense(): Single<List<DomainRealEstateCondense>>
     fun getRealEstateMasterDetail(id: Long): Single<DomainRealEstateMasterDetail>
     fun getAllRealEstateMasterDetail(): Single<List<DomainRealEstateMasterDetail>>

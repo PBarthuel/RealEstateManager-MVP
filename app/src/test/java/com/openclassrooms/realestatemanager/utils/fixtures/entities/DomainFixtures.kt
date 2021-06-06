@@ -4,6 +4,8 @@ import com.openclassrooms.realestatemanager.domain.models.DomainAddress
 import com.openclassrooms.realestatemanager.domain.models.DomainPhoto
 import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateCondense
 import com.openclassrooms.realestatemanager.domain.models.DomainRealEstateMasterDetail
+import com.openclassrooms.realestatemanager.domain.models.permissions.DomainAccessPermission
+import com.openclassrooms.realestatemanager.domain.models.permissions.DomainMultiplePermission
 
 class DomainFixtures {
     
@@ -69,6 +71,34 @@ class DomainFixtures {
                             id = FixturesConstants.Photo.id,
                             photoReference = FixturesConstants.Photo.photoReference,
                             roomType = FixturesConstants.Photo.roomType
+                    )
+        }
+    }
+    
+    class DomainMultiplePermissionsUtils {
+        companion object {
+            fun createEmpty(): DomainMultiplePermission =
+                    DomainMultiplePermission(listOf(), listOf())
+            
+            fun createWithGeolocation(): DomainMultiplePermission = DomainMultiplePermission(
+                    listOf(
+                            DomainAccessPermission.GEOLOCATION_FOREGROUND,
+                            DomainAccessPermission.GEOLOCATION_BACKGROUND
+                    ), listOf()
+            )
+            
+            fun createWithoutGeolocation(): DomainMultiplePermission = DomainMultiplePermission(
+                    listOf(),
+                    listOf(
+                            DomainAccessPermission.GEOLOCATION_FOREGROUND,
+                            DomainAccessPermission.GEOLOCATION_BACKGROUND
+                    )
+            )
+            
+            fun createWithForegroundGeolocation(): DomainMultiplePermission =
+                    DomainMultiplePermission(
+                            listOf(DomainAccessPermission.GEOLOCATION_FOREGROUND),
+                            listOf(DomainAccessPermission.GEOLOCATION_BACKGROUND)
                     )
         }
     }

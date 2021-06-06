@@ -17,8 +17,8 @@ class RealEstateRepositoryImpl @Inject constructor(
     private val realEstateDao: RealEstateDao
 ) : RealEstateRepository {
 
-    override fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail): Single<Unit> =
-        Single.create { single ->
+    override fun createRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail): Completable =
+        Completable.create { completable ->
             with(domainRealEstateMasterDetail) {
                 try {
                     val id = realEstateDao.createRealEstate(
@@ -65,9 +65,9 @@ class RealEstateRepositoryImpl @Inject constructor(
                             )
                         }
                     )
-                    single.onSuccess(Unit)
+                    completable.onComplete()
                 } catch (e: Exception) {
-                    single.onError(e)
+                    completable.onError(e)
                 }
             }
         }
