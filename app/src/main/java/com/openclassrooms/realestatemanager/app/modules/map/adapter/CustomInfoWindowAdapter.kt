@@ -14,8 +14,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
 class CustomInfoWindowAdapter (
     private val context: Context
