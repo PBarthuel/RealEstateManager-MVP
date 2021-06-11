@@ -9,7 +9,7 @@ class FixturesConstants {
             const val price = "100000"
             const val surface = "120"
             const val description = "Very beautiful place"
-            const val isSold = true
+            const val isSold = false
             const val school = true
             const val commerce = false
             const val parc = true

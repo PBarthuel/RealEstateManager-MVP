@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.app.modules.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.FrameLayout
 import androidx.activity.result.ActivityResultLauncher
@@ -9,6 +10,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
@@ -81,6 +83,7 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     
     private fun setupUI(savedInstanceState: Bundle?) {
         val navView = findViewById<NavigationView>(R.id.activityMainMenuNavigationView)
+        val drawer = findViewById<DrawerLayout>(R.id.mainDrawerLayout)
         detailFragmentLayout = findViewById(R.id.detailFragment)
         if (savedInstanceState == null) {
             if (detailFragmentLayout == null) {
@@ -89,8 +92,10 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                 navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
                     if (menuItem.itemId == R.id.navRealEstateList) {
                         displayedFragment(0)
+                        drawer.closeDrawer(GravityCompat.START)
                     }
                     if (menuItem.itemId == R.id.navRealEstateMap) {
+                        drawer.closeDrawer(GravityCompat.START)
                         Intent(this@MainActivity, MapActivity::class.java)
                                 .also { intent -> showMapRealEstateResult.launch(intent) }
                     }
@@ -100,7 +105,9 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                 setupFragmentsLandscape()
                 navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
                     if (menuItem.itemId == R.id.navRealEstateMap) {
-                        displayedFragment(1)
+                        drawer.closeDrawer(GravityCompat.START)
+                        Intent(this@MainActivity, MapActivity::class.java)
+                                .also { intent -> showMapRealEstateResult.launch(intent) }
                     }
                     false
                 }

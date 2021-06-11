@@ -4,12 +4,12 @@ import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
+import com.openclassrooms.realestatemanager.app.utils.Utils
 import com.openclassrooms.realestatemanager.domain.useCases.createRealEstate.CreateRealEstateUseCase
-import com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem.UIPhotoItem
+import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
 import com.openclassrooms.realestatemanager.utils.TestNetworkSchedulers
 import com.openclassrooms.realestatemanager.utils.fixtures.entities.PresenterFixtures
 import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.Before
@@ -31,11 +31,30 @@ class CreateRealEstatePresenterTests {
     
     @Test
     fun testDidSubmitRealEstate() {
-        // TODO regarder pourquoi j'ai une null pointer
         val expectedUIRealEstateMasterDetail = PresenterFixtures.UIRealEstateMasterDetailItemUtils.create()
         presenter.address = PresenterFixtures.UIAddressItemUtils.create()
         presenter.photos = arrayListOf(PresenterFixtures.UIPhotoItemUtils.create())
-        whenever(mockCreateRealEstate.invoke(expectedUIRealEstateMasterDetail)).thenReturn(Completable.complete())
+        val item = UIRealEstateMasterDetailItem(
+                id = 0,
+                type = expectedUIRealEstateMasterDetail.type,
+                price = expectedUIRealEstateMasterDetail.price,
+                surface = expectedUIRealEstateMasterDetail.surface,
+                description = expectedUIRealEstateMasterDetail.description,
+                school = expectedUIRealEstateMasterDetail.school,
+                commerce = expectedUIRealEstateMasterDetail.commerce,
+                parc = expectedUIRealEstateMasterDetail.parc,
+                trainStation = expectedUIRealEstateMasterDetail.trainStation,
+                false,
+                Utils.todayDate,
+                "05/05/2085",
+                agent = expectedUIRealEstateMasterDetail.agent,
+                totalRoomNumber = expectedUIRealEstateMasterDetail.totalRoomNumber,
+                bedroomNumber = expectedUIRealEstateMasterDetail.bedroomNumber,
+                bathroomNumber = expectedUIRealEstateMasterDetail.bathroomNumber,
+                presenter.address,
+                presenter.photos
+        )
+        whenever(mockCreateRealEstate.invoke(item)).thenReturn(Completable.complete())
         
         presenter.didSubmitRealEstate(
             expectedUIRealEstateMasterDetail.type,
@@ -53,7 +72,7 @@ class CreateRealEstatePresenterTests {
         )
     
         verify(mockView).onDismissView()
-        verify(mockCreateRealEstate).invoke(expectedUIRealEstateMasterDetail)
+        verify(mockCreateRealEstate).invoke(item)
         verifyNoMoreInteractions(mockView, mockCreateRealEstate)
     }
     

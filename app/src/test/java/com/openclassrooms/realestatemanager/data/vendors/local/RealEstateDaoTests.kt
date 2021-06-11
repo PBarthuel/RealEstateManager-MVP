@@ -3,14 +3,10 @@ package com.openclassrooms.realestatemanager.data.vendors.local
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.nhaarman.mockitokotlin2.whenever
 import com.openclassrooms.realestatemanager.data.models.entities.RealEstateMasterDetailResponse
-import com.openclassrooms.realestatemanager.data.repositories.local.RealEstateRepositoryImpl
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.AddressRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.PhotoRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.RealEstateRequest
-import com.openclassrooms.realestatemanager.utils.fixtures.entities.DomainFixtures
-import io.reactivex.rxjava3.core.Single
 import org.hamcrest.CoreMatchers.equalTo
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After

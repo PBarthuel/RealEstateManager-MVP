@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.openclassrooms.realestatemanager.R
 import com.openclassrooms.realestatemanager.app.modules.main.MainActivity
+import com.openclassrooms.realestatemanager.app.modules.map.adapter.CustomInfoWindowAdapter
 import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
 import com.openclassrooms.realestatemanager.app.utils.viewBindings.activityViewBinding
 import com.openclassrooms.realestatemanager.databinding.ActivityMapBinding
@@ -85,10 +86,13 @@ class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
                         )
                     ).icon(BitmapDescriptorFactory.defaultMarker())
                         .title(uiRealEstateMasterDetailItem.type)
+                            .snippet(uiRealEstateMasterDetailItem.price)
                 )
+                marker?.let { it.tag = uiRealEstateMasterDetailItem }
                 allMarkersMap[marker] = uiRealEstateMasterDetailItem
             }
         }
+        googleMap?.setInfoWindowAdapter(CustomInfoWindowAdapter(this))
         googleMap?.setOnInfoWindowClickListener {
             val result = MainActivity.RESULT_MAP
     

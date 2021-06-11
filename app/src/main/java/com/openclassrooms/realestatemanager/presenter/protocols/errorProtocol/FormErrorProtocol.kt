@@ -15,11 +15,6 @@ interface FormErrorProtocol : ErrorProtocol {
     fun onReceiveWrongTotalRoomNumberFormatError() {}
     fun onReceiveWrongBedroomNumberFormatError() {}
     fun onReceiveWrongBathroomNumberFormatError() {}
-    fun onReceiveWrongCountryFormatError() {}
-    fun onReceiveWrongRoadFormatError() {}
-    fun onReceiveWrongHouseNumberFormatError() {}
-    fun onReceiveWrongCityFormatError() {}
-    fun onReceiveWrongPostalCodeFormatError() {}
 
     override fun onReceiveError(exception: Throwable) {
         when (exception.toDomainExceptionType() as? DomainFormException) {

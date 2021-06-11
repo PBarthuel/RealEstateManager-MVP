@@ -201,26 +201,6 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
         binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
         binding.priceTextInputLayout.error = "wrong bathroom number format"
     }
-    override fun onReceiveWrongCountryFormatError() {
-        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
-        binding.priceTextInputLayout.error = "wrong country format"
-    }
-    override fun onReceiveWrongRoadFormatError() {
-        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
-        binding.priceTextInputLayout.error = "wrong road format"
-    }
-    override fun onReceiveWrongHouseNumberFormatError() {
-        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
-        binding.priceTextInputLayout.error = "wrong house number format"
-    }
-    override fun onReceiveWrongCityFormatError() {
-        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
-        binding.priceTextInputLayout.error = "wrong city format"
-    }
-    override fun onReceiveWrongPostalCodeFormatError() {
-        binding.priceTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)
-        binding.priceTextInputLayout.error = "wrong postal code format"
-    }
     //endregion
 
     //region OnPhotoClickListener callback
