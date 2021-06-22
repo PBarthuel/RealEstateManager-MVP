@@ -14,6 +14,7 @@
     <string name="menu_list">RealEstate list</string>
     <string name="menu_description">Real estate description</string>
     <string name="menu_map">Map</string>
+    <string name="menu_loan_simulator">Loan simulator</string>
 
     <string name="toolbar_search">Search</string>
     <string name="toolbar_modification">Modification</string>
@@ -68,4 +69,15 @@
     <string name="search_sold">Sold</string>
     <string name="search_validation">Validate search</string>
     <string name="search_city">City</string>
+
+    <string name="loan_simulator_loan_edit_text">Enter your loan here !</string>
+    <string name="loan_simulator_monthly_payment">Monthly payment</string>
+    <string name="loan_simulator_total_cost">Total cost</string>
+    <string name="loan_simulator_15_years">15 years</string>
+    <string name="loan_simulator_20_years">20 years</string>
+    <string name="loan_simulator_25_years">25 years</string>
+    <string name="loan_simulator_interest_rate">Interest rate</string>
+    <string name="loan_simulator_notary_fees">Notary fees</string>
+    <string name="loan_simulator_loan">Loan</string>
+    <string name="loan_simulator_total">Total</string>
 </resources>

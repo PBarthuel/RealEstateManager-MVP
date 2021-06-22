@@ -12,5 +12,9 @@
             android:id="@+id/navRealEstateMap"
             android:icon="@drawable/ic_pin"
             android:title="@string/menu_map" />
+        <item
+            android:id="@+id/navLoanSimulator"
+            android:icon="@drawable/ic_pencil"
+            android:title="@string/menu_loan_simulator" />
     </group>
 </menu>

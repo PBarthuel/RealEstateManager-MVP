@@ -36,6 +36,8 @@
             android:name=".app.modules.map.MapActivity"/>
         <activity
             android:name=".app.modules.searchRealEstate.SearchRealEstateActivity"/>
+        <activity
+            android:name=".app.modules.loanSimulator.LoanSimulatorActivity"/>
 
         <!-- UCrop -->
         <activity
