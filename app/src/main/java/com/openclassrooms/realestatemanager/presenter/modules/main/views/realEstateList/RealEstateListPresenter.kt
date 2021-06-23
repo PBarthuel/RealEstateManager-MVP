@@ -1,7 +1,9 @@
 package com.openclassrooms.realestatemanager.presenter.modules.main.views.realEstateList
 
+import com.openclassrooms.realestatemanager.domain.useCases.isEuro.GetIsEuroUseCase
 import com.openclassrooms.realestatemanager.domain.useCases.main.GetRealEstateCondenseUseCase
-import com.openclassrooms.realestatemanager.presenter.models.toUICondenseItem
+import com.openclassrooms.realestatemanager.presenter.models.toUICondenseItemDollar
+import com.openclassrooms.realestatemanager.presenter.models.toUICondenseItemEuro
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateCondenseItem.UIRealEstateCondenseItem
 import com.openclassrooms.realestatemanager.presenter.protocols.DisposablePresenter
 import com.openclassrooms.realestatemanager.presenter.protocols.plusAssign
@@ -22,6 +24,7 @@ interface RealEstateListPresenter : DisposablePresenter<RealEstateListView> {
 
 class RealEstateListPresenterImpl @Inject constructor(
     private val getRealEstateCondense: GetRealEstateCondenseUseCase,
+    private val getIsEuro: GetIsEuroUseCase,
     private val networkSchedulers: NetworkSchedulers
 ) : RealEstateListPresenter {
 
@@ -34,16 +37,35 @@ class RealEstateListPresenterImpl @Inject constructor(
     }
 
     override fun setup() {
-        disposeBag += getRealEstateCondense.invoke()
-            .map { domainRealEstatesCondenses ->
-                domainRealEstatesCondenses.map { domainRealEstateCondense ->
-                    domainRealEstateCondense.toUICondenseItem()
-                }
-            }
+        disposeBag += getIsEuro.invoke()
             .subscribeOn(networkSchedulers.io)
             .observeOn(networkSchedulers.main)
             .subscribe({
-                view?.onSetupRealEstates(it)
+                if(it == true) {
+                    disposeBag += getRealEstateCondense.invoke()
+                        .map { domainRealEstatesCondenses ->
+                            domainRealEstatesCondenses.map { domainRealEstateCondense ->
+                                domainRealEstateCondense.toUICondenseItemEuro()
+                            }
+                        }
+                        .subscribeOn(networkSchedulers.io)
+                        .observeOn(networkSchedulers.main)
+                        .subscribe({
+                            view?.onSetupRealEstates(it)
+                        }, { })
+                } else {
+                    disposeBag += getRealEstateCondense.invoke()
+                        .map { domainRealEstatesCondenses ->
+                            domainRealEstatesCondenses.map { domainRealEstateCondense ->
+                                domainRealEstateCondense.toUICondenseItemDollar()
+                            }
+                        }
+                        .subscribeOn(networkSchedulers.io)
+                        .observeOn(networkSchedulers.main)
+                        .subscribe({
+                            view?.onSetupRealEstates(it)
+                        }, { })
+                }
             }, { })
     }
 

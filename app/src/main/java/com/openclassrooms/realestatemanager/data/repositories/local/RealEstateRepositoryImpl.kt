@@ -3,6 +3,7 @@ package com.openclassrooms.realestatemanager.data.repositories.local
 import com.openclassrooms.realestatemanager.data.utils.throwDomainExceptionOnError
 import com.openclassrooms.realestatemanager.data.vendors.local.RealEstateDao
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.AddressRequest
+import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.IsEuroRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.PhotoRequest
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.RealEstateRequest
 import com.openclassrooms.realestatemanager.domain.models.DomainPhoto
@@ -148,5 +149,21 @@ class RealEstateRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 completable.onError(e)
             }
+        }
+    
+    override fun createIsEuro(id: Int, isEuro: Boolean): Completable =
+        Completable.create { completable ->
+            realEstateDao.createIsEuro(IsEuroRequest(id, isEuro))
+            completable.onComplete()
+        }
+    
+    override fun getIsEuro(): Single<Boolean> =
+        realEstateDao.getIsEuro()
+            .throwDomainExceptionOnError()
+    
+    override fun updateIsEuro(isEuro: Boolean): Completable =
+        Completable.create { completable ->
+            realEstateDao.updateIsEuro(IsEuroRequest(0, isEuro))
+            completable.onComplete()
         }
 }

@@ -74,7 +74,7 @@ class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
     }
     
     //region MapView Callback
-    override fun onSetupMapMarker(list: List<UIRealEstateMasterDetailItem>) {
+    override fun onSetupMapMarker(list: List<UIRealEstateMasterDetailItem>, isEuro: Boolean) {
         val allMarkersMap: ArrayMap<Marker, UIRealEstateMasterDetailItem> = arrayMapOf()
         list.forEach { uiRealEstateMasterDetailItem ->
             if (uiRealEstateMasterDetailItem.address.latitude != 0.0 && uiRealEstateMasterDetailItem.address.longitude != 0.0) {
@@ -85,14 +85,12 @@ class MapActivity: AppCompatActivity(), MapView, OnMapReadyCallback {
                             uiRealEstateMasterDetailItem.address.longitude
                         )
                     ).icon(BitmapDescriptorFactory.defaultMarker())
-                        .title(uiRealEstateMasterDetailItem.type)
-                            .snippet(uiRealEstateMasterDetailItem.price)
                 )
                 marker?.let { it.tag = uiRealEstateMasterDetailItem }
                 allMarkersMap[marker] = uiRealEstateMasterDetailItem
             }
         }
-        googleMap?.setInfoWindowAdapter(CustomInfoWindowAdapter(this))
+        googleMap?.setInfoWindowAdapter(CustomInfoWindowAdapter(this, isEuro))
         googleMap?.setOnInfoWindowClickListener {
             val result = MainActivity.RESULT_MAP
     

@@ -1,6 +1,7 @@
 package com.openclassrooms.realestatemanager.presenter.modules.map
 
 import com.openclassrooms.realestatemanager.domain.useCases.geocoder.GetUserAddressUseCase
+import com.openclassrooms.realestatemanager.domain.useCases.isEuro.GetIsEuroUseCase
 import com.openclassrooms.realestatemanager.domain.useCases.map.GetAllRealEstateMasterDetailUseCase
 import com.openclassrooms.realestatemanager.domain.useCases.permissions.IsGeolocationEnabledUseCase
 import com.openclassrooms.realestatemanager.presenter.models.toUIMasterDetailItem
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 interface MapView {
     fun onEnableUserPosition()
-    fun onSetupMapMarker(list: List<UIRealEstateMasterDetailItem>)
+    fun onSetupMapMarker(list: List<UIRealEstateMasterDetailItem>, isEuro: Boolean)
     fun onShowUserPosition(item: UIAddressItem)
 }
 
@@ -27,6 +28,7 @@ class MapPresenterImpl @Inject constructor(
     private val getAllRealEstateMasterDetail: GetAllRealEstateMasterDetailUseCase,
     private val isGeolocationEnabled: IsGeolocationEnabledUseCase,
     private val getUserAddress: GetUserAddressUseCase,
+    private val getIsEuro: GetIsEuroUseCase,
     private val networkSchedulers: NetworkSchedulers
 ) : MapPresenter {
     
@@ -44,16 +46,21 @@ class MapPresenterImpl @Inject constructor(
     }
     
     override fun setupMapMarker() {
-        disposeBag += getAllRealEstateMasterDetail.invoke()
-            .map { domainRealEstatesMastersDetails ->
-                domainRealEstatesMastersDetails.map {
-                    it.toUIMasterDetailItem()
-                }
-            }
+        disposeBag += getIsEuro.invoke()
             .subscribeOn(networkSchedulers.io)
             .observeOn(networkSchedulers.main)
-            .subscribe({
-                view?.onSetupMapMarker(it)
+            .subscribe({ isEuro ->
+                disposeBag += getAllRealEstateMasterDetail.invoke()
+                    .map { domainRealEstatesMastersDetails ->
+                        domainRealEstatesMastersDetails.map {
+                            it.toUIMasterDetailItem()
+                        }
+                    }
+                    .subscribeOn(networkSchedulers.io)
+                    .observeOn(networkSchedulers.main)
+                    .subscribe({
+                        view?.onSetupMapMarker(it, isEuro)
+                    }, {})
             }, {})
     }
     

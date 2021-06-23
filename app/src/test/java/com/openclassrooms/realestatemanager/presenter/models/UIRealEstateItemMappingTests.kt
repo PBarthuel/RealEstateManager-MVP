@@ -12,10 +12,17 @@ import org.mockito.junit.MockitoJUnitRunner
 class UIRealEstateItemMappingTests {
     
     @Test
-    fun testToUICondenseItem() {
-        val expectedUIItem = PresenterFixtures.UIRealEstateCondenseItemUtils.create()
+    fun testToUICondenseItemDollar() {
+        val expectedUIItem = PresenterFixtures.UIRealEstateCondenseItemUtils.createDollar()
         val actualDomain = DomainFixtures.DomainRealEstateCondenseUtils.create()
-        assertThat(actualDomain.toUICondenseItem(), equalTo(expectedUIItem))
+        assertThat(actualDomain.toUICondenseItemDollar(), equalTo(expectedUIItem))
+    }
+    
+    @Test
+    fun testToUICondenseItemEuro() {
+        val expectedUIItem = PresenterFixtures.UIRealEstateCondenseItemUtils.createEuro()
+        val actualDomain = DomainFixtures.DomainRealEstateCondenseUtils.create()
+        assertThat(actualDomain.toUICondenseItemEuro(), equalTo(expectedUIItem))
     }
     
     @Test
