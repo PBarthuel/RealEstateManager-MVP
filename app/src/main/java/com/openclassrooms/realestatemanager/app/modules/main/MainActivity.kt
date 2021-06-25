@@ -15,6 +15,7 @@ import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.navigation.NavigationView
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.app.modules.loanSimulator.LoanSimulatorActivity
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragment
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragmentListener
@@ -93,24 +94,38 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                 setupFragmentsPortrait()
                 displayedFragment(0)
                 navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
-                    if (menuItem.itemId == R.id.navRealEstateList) {
-                        displayedFragment(0)
-                        drawer.closeDrawer(GravityCompat.START)
-                    }
-                    if (menuItem.itemId == R.id.navRealEstateMap) {
-                        drawer.closeDrawer(GravityCompat.START)
-                        Intent(this@MainActivity, MapActivity::class.java)
+                    when(menuItem.itemId) {
+                        R.id.navRealEstateList -> {
+                            displayedFragment(0)
+                            drawer.closeDrawer(GravityCompat.START)
+                        }
+                        R.id.navRealEstateMap -> {
+                            drawer.closeDrawer(GravityCompat.START)
+                            Intent(this@MainActivity, MapActivity::class.java)
                                 .also { intent -> showMapRealEstateResult.launch(intent) }
+                        }
+                        R.id.navLoanSimulator -> {
+                            drawer.closeDrawer(GravityCompat.START)
+                            Intent(this@MainActivity, LoanSimulatorActivity::class.java)
+                                .also { intent -> startActivity(intent) }
+                        }
                     }
                     false
                 }
             } else {
                 setupFragmentsLandscape()
                 navView.setNavigationItemSelectedListener { menuItem: MenuItem ->
-                    if (menuItem.itemId == R.id.navRealEstateMap) {
-                        drawer.closeDrawer(GravityCompat.START)
-                        Intent(this@MainActivity, MapActivity::class.java)
-                                .also { intent -> showMapRealEstateResult.launch(intent) }
+                    when(menuItem.itemId) {
+                        R.id.navRealEstateMap -> {
+                            drawer.closeDrawer(GravityCompat.START)
+                            Intent(this@MainActivity, MapActivity::class.java)
+                                    .also { intent -> showMapRealEstateResult.launch(intent) }
+                        }
+                        R.id.navLoanSimulator -> {
+                            drawer.closeDrawer(GravityCompat.START)
+                            Intent(this@MainActivity, LoanSimulatorActivity::class.java)
+                                    .also { intent -> startActivity(intent) }
+                        }
                     }
                     false
                 }
