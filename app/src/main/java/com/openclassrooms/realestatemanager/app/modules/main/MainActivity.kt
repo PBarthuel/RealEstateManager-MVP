@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.MenuItem
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -73,6 +74,8 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     private fun setupToolBarAndMenuDrawer() {
         val toolbar = findViewById<Toolbar>(R.id.mainToolbar)
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
         val drawer = findViewById<DrawerLayout>(R.id.mainDrawerLayout)
         val toggle = ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
@@ -140,6 +143,22 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
             }
             commit()
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if(item.itemId == android.R.id.home) {
+            displayedFragment(0)
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun displayNoInternet() {
+        Toast.makeText(this, "no internat", Toast.LENGTH_SHORT).show()
+        //TODO enlever ça et mettre internet la ou il faut
+    }
+
+    override fun displayInternet() {
+        Toast.makeText(this, "internat", Toast.LENGTH_SHORT).show()
     }
 
     //region GeoLocPermissionsView Callbacks

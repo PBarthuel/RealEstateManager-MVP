@@ -85,9 +85,12 @@ class RealEstateDaoTests {
         dao.createRealEstate(realEstateRequest)
         dao.createAddress(addressRequest)
         dao.createPhoto(photoRequest)
-        
-        val value = dao.getRealEstateMasterDetail(expectedId)
-        
-        assertThat(value, equalTo(RealEstateMasterDetailResponse(realEstateRequest, addressRequest, photoRequest)))
+
+        dao.getRealEstateMasterDetail(expectedId)
+            .test()
+            .assertValue {
+                assertThat(it, equalTo(RealEstateMasterDetailResponse(realEstateRequest, addressRequest, photoRequest)))
+                true
+            }
     }
 }

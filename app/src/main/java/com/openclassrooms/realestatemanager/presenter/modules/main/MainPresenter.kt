@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.presenter.modules.main
 
+import com.openclassrooms.realestatemanager.data.repositories.local.ConnectivityRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.useCases.permissions.IsGeolocationEnabledUseCase
 import com.openclassrooms.realestatemanager.domain.useCases.permissions.RequestGeolocationPermissionUseCase
 import com.openclassrooms.realestatemanager.presenter.protocols.DisposablePresenter
@@ -9,6 +10,8 @@ import com.openclassrooms.realestatemanager.presenter.protocols.utils.NetworkSch
 import javax.inject.Inject
 
 interface MainView : PermissionErrorProtocol {
+    fun displayNoInternet()
+    fun displayInternet()
 }
 
 interface MainPresenter : DisposablePresenter<MainView> {
@@ -18,7 +21,8 @@ interface MainPresenter : DisposablePresenter<MainView> {
 class MainPresenterImpl @Inject constructor(
     private val isGeolocationEnabled: IsGeolocationEnabledUseCase,
     private val requestGeolocationPermission: RequestGeolocationPermissionUseCase,
-    private val networkSchedulers: NetworkSchedulers
+    private val networkSchedulers: NetworkSchedulers,
+    private val connectivityRepositoryImpl: ConnectivityRepositoryImpl
 ) : MainPresenter {
 
     override var view: MainView? = null
@@ -28,6 +32,18 @@ class MainPresenterImpl @Inject constructor(
     }
 
     override fun setup() {
+        disposeBag += connectivityRepositoryImpl
+            .isConnectedPublishSubject
+            .subscribeOn(networkSchedulers.io)
+            .subscribe({
+                if(!it) {
+                    //TODO comme ça pour verifier internet
+                        //TODO si tu as oublié tu a handle internet pour la pull request 
+                    view?.displayNoInternet()
+                } else {
+                    view?.displayInternet()
+                }
+            }, {})
         if(!isGeolocationEnabled.invoke()) {
             disposeBag += requestGeolocationPermission.invoke()
                 .subscribeOn(networkSchedulers.io)

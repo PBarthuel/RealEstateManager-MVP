@@ -2,6 +2,7 @@ package com.openclassrooms.realestatemanager.app.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import java.text.DateFormat
 import java.text.SimpleDateFormat

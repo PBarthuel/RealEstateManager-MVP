@@ -17,8 +17,8 @@ import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterD
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class CustomInfoWindowAdapter @Inject constructor(
-    @ApplicationContext private val context: Context
+class CustomInfoWindowAdapter (
+    private val context: Context
 ) : GoogleMap.InfoWindowAdapter {
     
     var view = (context as Activity).layoutInflater.inflate(R.layout.view_holder_custom_info_window, null)
