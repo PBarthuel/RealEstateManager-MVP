@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.presenter.modules.main
 
 import com.openclassrooms.realestatemanager.data.repositories.local.ConnectivityRepositoryImpl
+import com.openclassrooms.realestatemanager.domain.useCases.isEuro.GetIsEuroUseCase
+import com.openclassrooms.realestatemanager.domain.useCases.isEuro.CreateIsEuroUseCase
 import com.openclassrooms.realestatemanager.domain.useCases.permissions.IsGeolocationEnabledUseCase
 import com.openclassrooms.realestatemanager.domain.useCases.permissions.RequestGeolocationPermissionUseCase
 import com.openclassrooms.realestatemanager.presenter.protocols.DisposablePresenter
@@ -21,8 +23,10 @@ interface MainPresenter : DisposablePresenter<MainView> {
 class MainPresenterImpl @Inject constructor(
     private val isGeolocationEnabled: IsGeolocationEnabledUseCase,
     private val requestGeolocationPermission: RequestGeolocationPermissionUseCase,
-    private val networkSchedulers: NetworkSchedulers,
-    private val connectivityRepositoryImpl: ConnectivityRepositoryImpl
+    private val connectivityRepositoryImpl: ConnectivityRepositoryImpl,
+    private val createIsEuro: CreateIsEuroUseCase,
+    private val getIsEuro: GetIsEuroUseCase,
+    private val networkSchedulers: NetworkSchedulers
 ) : MainPresenter {
 
     override var view: MainView? = null
@@ -38,12 +42,12 @@ class MainPresenterImpl @Inject constructor(
             .subscribe({
                 if(!it) {
                     //TODO comme ça pour verifier internet
-                        //TODO si tu as oublié tu a handle internet pour la pull request 
                     view?.displayNoInternet()
                 } else {
                     view?.displayInternet()
                 }
             }, {})
+
         if(!isGeolocationEnabled.invoke()) {
             disposeBag += requestGeolocationPermission.invoke()
                 .subscribeOn(networkSchedulers.io)
@@ -52,5 +56,15 @@ class MainPresenterImpl @Inject constructor(
                     { error -> view?.onReceiveError(error) }
                 )
         }
+
+        disposeBag += getIsEuro.invoke()
+            .subscribeOn(networkSchedulers.io)
+            .observeOn(networkSchedulers.main)
+            .subscribe({ }, {
+                disposeBag += createIsEuro.invoke()
+                    .subscribeOn(networkSchedulers.io)
+                    .observeOn(networkSchedulers.main)
+                    .subscribe({}, {})
+            })
     }
 }

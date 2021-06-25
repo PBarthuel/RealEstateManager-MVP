@@ -13,12 +13,12 @@ import androidx.core.view.isVisible
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.openclassrooms.realestatemanager.R
+import com.openclassrooms.realestatemanager.app.utils.Utils
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
-import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 
 class CustomInfoWindowAdapter (
-    private val context: Context
+    private val context: Context,
+    private val isEuro: Boolean
 ) : GoogleMap.InfoWindowAdapter {
     
     var view = (context as Activity).layoutInflater.inflate(R.layout.view_holder_custom_info_window, null)
@@ -35,7 +35,13 @@ class CustomInfoWindowAdapter (
     
         tvType.text = item.type
         tvRoad.text = item.address.road
-        tvPrice.text = item.price
+        if(isEuro) {
+            val price = Utils.convertDollarToEuro(item.price.toInt()).toString() + "€"
+            tvPrice.text = price
+        } else {
+            val price = "${item.price}$"
+            tvPrice.text = price
+        }
         if(item.photos.isNotEmpty()) {
             val decodedString = Base64.decode(item.photos[0].photoReference, Base64.DEFAULT)
             BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)?.let { ivImage.setImageBitmap(it) }

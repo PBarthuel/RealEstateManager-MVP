@@ -38,6 +38,8 @@
             android:name=".app.modules.searchRealEstate.SearchRealEstateActivity"/>
         <activity
             android:name=".app.modules.loanSimulator.LoanSimulatorActivity"/>
+        <activity
+            android:name=".app.modules.settings.SettingsActivity"/>
 
         <!-- UCrop -->
         <activity

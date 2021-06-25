@@ -2,7 +2,6 @@ package com.openclassrooms.realestatemanager.app.modules.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.Gravity
 import android.view.MenuItem
 import android.widget.FrameLayout
 import android.widget.Toast
@@ -21,7 +20,7 @@ import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMas
 import com.openclassrooms.realestatemanager.app.modules.main.views.RealEstateMasterDetailFragmentListener
 import com.openclassrooms.realestatemanager.app.modules.main.views.realEstateList.RealEstateListFragmentListener
 import com.openclassrooms.realestatemanager.app.modules.map.MapActivity
-import com.openclassrooms.realestatemanager.app.modules.searchRealEstate.SearchRealEstateActivity
+import com.openclassrooms.realestatemanager.app.modules.settings.SettingsActivity
 import com.openclassrooms.realestatemanager.app.ui.popups.GeolocationPopUpDialog
 import com.openclassrooms.realestatemanager.app.utils.showAppSettings
 import com.openclassrooms.realestatemanager.presenter.modules.main.MainPresenter
@@ -42,16 +41,17 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
     private var detailFragmentLayout: FrameLayout? = null
     
     //region ActivityResult
-    private val showMapRealEstateResult: ActivityResultLauncher<Intent> =
+    private val showMapOrSettingsRealEstateResult: ActivityResultLauncher<Intent> =
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-                if(result.resultCode == RESULT_MAP) {
-                    result.data?.getLongExtra(MapActivity.INTENT_ID_ITEM_DATA, 0)
+                when(result.resultCode) {
+                    RESULT_MAP -> result.data?.getLongExtra(MapActivity.INTENT_ID_ITEM_DATA, 0)
                         ?.let { id ->
                             if(detailFragmentLayout == null) {
                                 displayedFragment(1)
                             }
                             masterDetailFragment.presenter.setup(id)
                         }
+                    RESULT_SETTINGS -> listFragment.presenter.setup()
                 }
             }
     //endregion
@@ -102,7 +102,12 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                         R.id.navRealEstateMap -> {
                             drawer.closeDrawer(GravityCompat.START)
                             Intent(this@MainActivity, MapActivity::class.java)
-                                .also { intent -> showMapRealEstateResult.launch(intent) }
+                                .also { intent -> showMapOrSettingsRealEstateResult.launch(intent) }
+                        }
+                        R.id.navRealEstateSettings -> {
+                        drawer.closeDrawer(GravityCompat.START)
+                        Intent(this@MainActivity, SettingsActivity::class.java)
+                                .also { intent -> showMapOrSettingsRealEstateResult.launch(intent) }
                         }
                         R.id.navLoanSimulator -> {
                             drawer.closeDrawer(GravityCompat.START)
@@ -119,7 +124,12 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
                         R.id.navRealEstateMap -> {
                             drawer.closeDrawer(GravityCompat.START)
                             Intent(this@MainActivity, MapActivity::class.java)
-                                    .also { intent -> showMapRealEstateResult.launch(intent) }
+                                    .also { intent -> showMapOrSettingsRealEstateResult.launch(intent) }
+                        }
+                        R.id.navRealEstateSettings -> {
+                        drawer.closeDrawer(GravityCompat.START)
+                        Intent(this@MainActivity, SettingsActivity::class.java)
+                                .also { intent -> showMapOrSettingsRealEstateResult.launch(intent) }
                         }
                         R.id.navLoanSimulator -> {
                             drawer.closeDrawer(GravityCompat.START)
@@ -217,5 +227,6 @@ class MainActivity: AppCompatActivity(), MainView, RealEstateListFragmentListene
         const val RESULT_EDIT = 101
         const val RESULT_SEARCH = 102
         const val RESULT_MAP = 103
+        const val RESULT_SETTINGS = 104
     }
 }

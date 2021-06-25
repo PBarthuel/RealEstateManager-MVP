@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.utils.fixtures.entities
 
+import com.openclassrooms.realestatemanager.app.utils.Utils
 import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
 import com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem.UIPhotoItem
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateCondenseItem.UIRealEstateCondenseItem
@@ -9,12 +10,21 @@ class PresenterFixtures {
     
     class UIRealEstateCondenseItemUtils {
         companion object {
-            fun create(): UIRealEstateCondenseItem =
+            fun createDollar(): UIRealEstateCondenseItem =
                 UIRealEstateCondenseItem(
                     id = FixturesConstants.RealEstate.id,
                     type = FixturesConstants.RealEstate.type,
                     city = FixturesConstants.Address.city,
-                    price = FixturesConstants.RealEstate.price,
+                    price = "${FixturesConstants.RealEstate.price}$",
+                    isSold = FixturesConstants.RealEstate.isSold,
+                    photo = FixturesConstants.Photo.photoReference
+                )
+            fun createEuro(): UIRealEstateCondenseItem =
+                UIRealEstateCondenseItem(
+                    id = FixturesConstants.RealEstate.id,
+                    type = FixturesConstants.RealEstate.type,
+                    city = FixturesConstants.Address.city,
+                    price = Utils.convertDollarToEuro(FixturesConstants.RealEstate.price.toInt()).toString() + "€",
                     isSold = FixturesConstants.RealEstate.isSold,
                     photo = FixturesConstants.Photo.photoReference
                 )

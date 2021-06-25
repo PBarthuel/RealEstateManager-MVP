@@ -14,7 +14,11 @@
             android:title="@string/menu_map" />
         <item
             android:id="@+id/navLoanSimulator"
-            android:icon="@drawable/ic_pencil"
+            android:icon="@drawable/ic_loan"
             android:title="@string/menu_loan_simulator" />
+        <item
+            android:id="@+id/navRealEstateSettings"
+            android:icon="@drawable/ic_settings"
+            android:title="@string/menu_settings" />
     </group>
 </menu>

@@ -12,4 +12,7 @@ interface RealEstateRepository {
     fun getRealEstateMasterDetail(id: Long): Single<DomainRealEstateMasterDetail>
     fun getAllRealEstateMasterDetail(): Single<List<DomainRealEstateMasterDetail>>
     fun editRealEstate(domainRealEstateMasterDetail: DomainRealEstateMasterDetail, photosToDelete: List<DomainPhoto>): Completable
+    fun createIsEuro(id: Int, isEuro: Boolean): Completable
+    fun getIsEuro(): Single<Boolean>
+    fun updateIsEuro(isEuro: Boolean): Completable
 }
