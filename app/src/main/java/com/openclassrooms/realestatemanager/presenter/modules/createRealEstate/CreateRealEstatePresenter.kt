@@ -1,6 +1,8 @@
 package com.openclassrooms.realestatemanager.presenter.modules.createRealEstate
 
+import android.util.Log
 import com.openclassrooms.realestatemanager.app.utils.Utils
+import com.openclassrooms.realestatemanager.data.repositories.local.ConnectivityRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.useCases.createRealEstate.CreateRealEstateUseCase
 import com.openclassrooms.realestatemanager.presenter.models.uiAddressItem.UIAddressItem
 import com.openclassrooms.realestatemanager.presenter.models.uiPhotoItem.UIPhotoItem
@@ -15,9 +17,12 @@ interface CreateRealEstateView : FormErrorProtocol {
     fun onDismissView()
     fun onUpdateList(list: List<UIPhotoItem>)
     fun onShowAddress(address: String)
+    fun onShowAddressEditText()
+    fun onHideAddressEditText()
 }
 
 interface CreateRealEstatePresenter: DisposablePresenter<CreateRealEstateView> {
+    fun setup()
     fun didSubmitRealEstate(type: String, price: String, surface: String, description: String, school: Boolean, commerce: Boolean, parc: Boolean, trainStation: Boolean, agent: String, totalRoomNumber: String, bedroomNumber: String, bathroomNumber: String)
     fun didAddPhoto(photoName: String, base64ImageData: String)
     fun didDeletePhoto(photo: UIPhotoItem)
@@ -26,6 +31,7 @@ interface CreateRealEstatePresenter: DisposablePresenter<CreateRealEstateView> {
 
 class CreateRealEstatePresenterImpl @Inject constructor(
     private val createRealEstate: CreateRealEstateUseCase,
+    private val connectivityRepositoryImpl: ConnectivityRepositoryImpl,
     private val networkSchedulers: NetworkSchedulers
 ) : CreateRealEstatePresenter {
     
@@ -45,7 +51,20 @@ class CreateRealEstatePresenterImpl @Inject constructor(
     override fun attach(view: CreateRealEstateView) {
         this.view = view
     }
-    
+
+    override fun setup() {
+        disposeBag += connectivityRepositoryImpl
+            .isConnectedPublishSubject
+            .subscribeOn(networkSchedulers.io)
+            .subscribe({
+                if(it) {
+                    view?.onShowAddressEditText()
+                } else {
+                    view?.onHideAddressEditText()
+                }
+            }, { it.printStackTrace() })
+    }
+
     override fun didSubmitRealEstate(
         type: String,
         price: String,

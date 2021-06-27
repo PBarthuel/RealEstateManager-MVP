@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,6 +32,7 @@ import pl.aprilapps.easyphotopicker.EasyImage
 import pl.aprilapps.easyphotopicker.MediaFile
 import pl.aprilapps.easyphotopicker.MediaSource
 import javax.inject.Inject
+import kotlin.math.log
 
 @AndroidEntryPoint
 class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPhotoClickListener {
@@ -65,6 +67,7 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
 
         setupAdapter()
         setupUI()
+        presenter.setup()
     }
     
     override fun onDestroy() {
@@ -84,17 +87,11 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
                 .setChooserType(ChooserType.CAMERA_AND_GALLERY)
                 .build()
 
-            if (Utils.isInternetAvailable(this@CreateRealEstateActivity)) {
-                addressViewSwitcher.displayedChild = 0
-                addressEditText.setOnFocusChangeListener { _, hasFocus ->
-                    if (hasFocus) {
-                        Intent(applicationContext, AddressSearchActivity::class.java)
-                            .also { intent -> showAddressSearchResult.launch(intent) }
-                    }
+            binding.addressEditText.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    Intent(applicationContext, AddressSearchActivity::class.java)
+                        .also { intent -> showAddressSearchResult.launch(intent) }
                 }
-            } else {
-                addressViewSwitcher.displayedChild = 1
-                addressTextInputLayout.isVisible = false
             }
 
             photoButton.setClickWithDelay {
@@ -168,6 +165,15 @@ class CreateRealEstateActivity: AppCompatActivity(), CreateRealEstateView, OnPho
     }
 
     override fun onShowAddress(address: String) { binding.addressEditText.setText(address) }
+
+    override fun onShowAddressEditText() {
+        //TODO regarder les exceptions de rx + regarder le probleme du view switcher et aussi pour le commit tu as gerer internet
+        Log.d("courgette", "onShowAddressEditText() called")
+    }
+
+    override fun onHideAddressEditText() {
+        Log.d("courgette", "onHideAddressEditText() called")
+    }
 
     override fun onReceiveWrongTypeFormatError() {
         binding.typeTextInputLayout.setErrorIconDrawable(R.drawable.ic_error)

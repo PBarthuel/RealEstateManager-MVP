@@ -23,7 +23,6 @@ interface MainPresenter : DisposablePresenter<MainView> {
 class MainPresenterImpl @Inject constructor(
     private val isGeolocationEnabled: IsGeolocationEnabledUseCase,
     private val requestGeolocationPermission: RequestGeolocationPermissionUseCase,
-    private val connectivityRepositoryImpl: ConnectivityRepositoryImpl,
     private val createIsEuro: CreateIsEuroUseCase,
     private val getIsEuro: GetIsEuroUseCase,
     private val networkSchedulers: NetworkSchedulers
@@ -36,18 +35,6 @@ class MainPresenterImpl @Inject constructor(
     }
 
     override fun setup() {
-        disposeBag += connectivityRepositoryImpl
-            .isConnectedPublishSubject
-            .subscribeOn(networkSchedulers.io)
-            .subscribe({
-                if(!it) {
-                    //TODO comme ça pour verifier internet
-                    view?.displayNoInternet()
-                } else {
-                    view?.displayInternet()
-                }
-            }, {})
-
         if(!isGeolocationEnabled.invoke()) {
             disposeBag += requestGeolocationPermission.invoke()
                 .subscribeOn(networkSchedulers.io)
