@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".app.modules.main.RealEstateManagerApplication"
@@ -53,5 +54,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+
+        <provider
+            android:name=".data.vendors.contentProvider.CustomContentProvider"
+            android:authorities="com.openclassrooms.realestatemanager.data.vendors.contentProvider"
+            android:exported="true" />
     </application>
 </manifest>
