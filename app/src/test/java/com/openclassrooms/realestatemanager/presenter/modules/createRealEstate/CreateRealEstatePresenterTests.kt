@@ -5,6 +5,7 @@ import com.nhaarman.mockitokotlin2.verify
 import com.nhaarman.mockitokotlin2.verifyNoMoreInteractions
 import com.nhaarman.mockitokotlin2.whenever
 import com.openclassrooms.realestatemanager.app.utils.Utils
+import com.openclassrooms.realestatemanager.data.repositories.local.ConnectivityRepositoryImpl
 import com.openclassrooms.realestatemanager.domain.useCases.createRealEstate.CreateRealEstateUseCase
 import com.openclassrooms.realestatemanager.presenter.models.uiRealEstateMasterDetailItem.UIRealEstateMasterDetailItem
 import com.openclassrooms.realestatemanager.utils.TestNetworkSchedulers
@@ -20,9 +21,10 @@ import org.mockito.junit.MockitoJUnitRunner
 @RunWith(MockitoJUnitRunner::class)
 class CreateRealEstatePresenterTests {
     private val mockCreateRealEstate: CreateRealEstateUseCase = mock()
+    private val mockConnectivityRepository: ConnectivityRepositoryImpl = mock()
     private val testNetworkSchedulers = TestNetworkSchedulers()
     private val mockView: CreateRealEstateView = mock()
-    private val presenter = CreateRealEstatePresenterImpl(mockCreateRealEstate, testNetworkSchedulers)
+    private val presenter = CreateRealEstatePresenterImpl(mockCreateRealEstate, mockConnectivityRepository, testNetworkSchedulers)
     
     @Before
     fun setup() {

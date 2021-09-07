@@ -10,7 +10,6 @@ import android.util.Log
 import com.openclassrooms.realestatemanager.app.utils.Utils
 import dagger.hilt.android.qualifiers.ApplicationContext
 import io.reactivex.rxjava3.subjects.BehaviorSubject
-import io.reactivex.rxjava3.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 

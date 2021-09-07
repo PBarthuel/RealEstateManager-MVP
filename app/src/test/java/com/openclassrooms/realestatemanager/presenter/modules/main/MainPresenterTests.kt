@@ -34,10 +34,12 @@ class MainPresenterTests {
     @Test
     fun testSetupWithGeolocation() {
         whenever(mockIsGeolocationEnabled.invoke()).thenReturn(true)
-        
+        whenever(mockGetIsEuro.invoke()).thenReturn(Single.just(true))
+
         presenter.setup()
         
         verify(mockIsGeolocationEnabled).invoke()
+        verify(mockGetIsEuro).invoke()
         verifyNoMoreInteractions(mockView, mockIsGeolocationEnabled, mockRequestGeolocationPermission)
     }
     
@@ -46,11 +48,13 @@ class MainPresenterTests {
         val expectedDomainMultiplePermission = DomainFixtures.DomainMultiplePermissionsUtils.createWithGeolocation()
         whenever(mockIsGeolocationEnabled.invoke()).thenReturn(false)
         whenever(mockRequestGeolocationPermission.invoke()).thenReturn(Single.just(expectedDomainMultiplePermission))
+        whenever(mockGetIsEuro.invoke()).thenReturn(Single.just(true))
         
         presenter.setup()
         
         verify(mockIsGeolocationEnabled).invoke()
         verify(mockRequestGeolocationPermission).invoke()
+        verify(mockGetIsEuro).invoke()
         verifyNoMoreInteractions(mockView, mockIsGeolocationEnabled, mockRequestGeolocationPermission)
     }
 }
