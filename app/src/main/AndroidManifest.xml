@@ -56,8 +56,8 @@
             android:value="@string/google_maps_key" />
 
         <provider
-            android:name=".data.vendors.contentProvider.CustomContentProvider"
-            android:authorities="com.openclassrooms.realestatemanager.data.vendors.contentProvider"
-            android:exported="true" />
+            android:name=".data.vendors.local.contentProvider.ItemContentProvider"
+            android:authorities="com.openclassrooms.realestatemanager"
+            android:exported="true"/>
     </application>
 </manifest>
