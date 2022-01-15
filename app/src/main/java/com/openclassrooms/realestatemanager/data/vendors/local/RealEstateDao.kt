@@ -17,9 +17,10 @@ import io.reactivex.rxjava3.core.Single
 
 @Dao
 interface RealEstateDao {
-    
-    @Query("SELECT * FROM PhotoRequest WHERE realEstateOwnerId = :id")
-    fun getRealEstatePhotoWithCursor(id: Long): Cursor
+
+    @Transaction
+    @Query("SELECT * FROM RealEstateRequest")
+    fun getAllRealEstateMasterDetailWithCursor(): Cursor
     
     @Transaction
     @Query("SELECT * FROM RealEstateRequest WHERE realEstateId = :id")
