@@ -3,18 +3,17 @@ package com.openclassrooms.realestatemanager.data.vendors.local.contentProvider
 import android.content.ContentProvider
 import android.content.ContentUris
 import android.content.ContentValues
-import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import com.openclassrooms.realestatemanager.data.vendors.local.RealEstateDb
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.PhotoRequest
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class ItemContentProvider @Inject constructor(
-    private val realEstateDb: RealEstateDb
-): ContentProvider() {
-    
+class ItemContentProvider: ContentProvider() {
+
+    @Inject
+    lateinit var realEstateDb: RealEstateDb
+
     val AUTHORITY = "com.openclassrooms.realestatemanager"
     val TABLE_NAME: String = PhotoRequest::class.java.simpleName
     val URI_ITEM = Uri.parse("content://$AUTHORITY/$TABLE_NAME")

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.openclassrooms.realestatemanager">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -57,7 +58,7 @@
 
         <provider
             android:name=".data.vendors.local.contentProvider.ItemContentProvider"
-            android:authorities="com.openclassrooms.realestatemanager"
-            android:exported="true"/>
+            android:authorities="com.openclassrooms.realestatemanager.data.vendors.local.contentProvider"
+            android:exported="false" />
     </application>
 </manifest>
