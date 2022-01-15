@@ -1,7 +1,12 @@
 package com.openclassrooms.realestatemanager.data.vendors.local
 
 import android.database.Cursor
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import com.openclassrooms.realestatemanager.data.models.entities.RealEstateCondenseResponse
 import com.openclassrooms.realestatemanager.data.models.entities.RealEstateMasterDetailResponse
 import com.openclassrooms.realestatemanager.data.vendors.local.objectRequest.AddressRequest
@@ -13,6 +18,9 @@ import io.reactivex.rxjava3.core.Single
 @Dao
 interface RealEstateDao {
     
+    @Query("SELECT * FROM PhotoRequest WHERE realEstateOwnerId = :id")
+    fun getRealEstatePhotoWithCursor(id: Long): Cursor
+    
     @Transaction
     @Query("SELECT * FROM RealEstateRequest WHERE realEstateId = :id")
     fun getRealEstateMasterDetail(id: Long): Single<RealEstateMasterDetailResponse>
@@ -20,10 +28,6 @@ interface RealEstateDao {
     @Transaction
     @Query("SELECT * FROM RealEstateRequest")
     fun getAllRealEstateMasterDetail(): Single<List<RealEstateMasterDetailResponse>>
-
-    @Transaction
-    @Query("SELECT * FROM RealEstateRequest")
-    fun getAllRealEstateMasterDetailWithCursor(): Cursor
     
     @Transaction
     @Query("SELECT * FROM RealEstateRequest")

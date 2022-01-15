@@ -1,5 +1,6 @@
 package com.openclassrooms.realestatemanager.data.vendors.local.objectRequest
 
+import android.content.ContentValues
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -19,4 +20,17 @@ data class PhotoRequest(
 ) : DomainModelConvertible<DomainPhoto> {
     override fun toDomain(): DomainPhoto =
         DomainPhoto(photoId, photoReference, roomType)
+    
+    fun fromContentValues(values: ContentValues): PhotoRequest {
+        return if(values.containsKey("photoId") && values.containsKey("photo_reference") && values.containsKey("room_type")) {
+            PhotoRequest(
+                values.getAsLong("photoId"),
+                0,
+                values.getAsString("photo_reference"),
+                values.getAsString("room_type")
+            )
+        } else {
+            PhotoRequest(0 ,0 , "", "")
+        }
+    }
 }
